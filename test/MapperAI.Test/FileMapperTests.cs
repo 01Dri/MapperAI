@@ -30,7 +30,7 @@ public class FileMapperTests
         FileMapperConfiguration configuration = new FileMapperConfiguration(InputFolder, OutputFolder)
         {
             NameSpace = "MapperAI.Test.MappedClasses",
-            Extension = "go"
+            Extension = "go",
         };
         await _mapper.MapAsync(configuration, _clientConfiguration);
         var files = Directory.GetFiles(OutputFolder);

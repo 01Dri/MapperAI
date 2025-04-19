@@ -13,7 +13,7 @@ public class ClassMapperTests
     private readonly ClientConfiguration _clientConfiguration = new ()
     {
         Type = ModelType.Gemini,
-        Model = "deepseek-r1",
+        Model = "gemini-2.0-flash",
         ApiKey = Environment.GetEnvironmentVariable("GEMINI_KEY")
     };
     
