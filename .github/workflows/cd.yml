@@ -29,7 +29,7 @@ jobs:
 
       - name: Publish to NuGet
         env:
-          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+          NUGET_API_KEY: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          dotnet nuget push **/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source https://api.nuget.org/v3/index.json
+          dotnet nuget push **/bin/Release/*.nupkg --api-key $GITHUB_TOKEN --source https://nuget.pkg.github.com/01Dri/index.json"
 
