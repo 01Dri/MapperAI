@@ -28,7 +28,8 @@ jobs:
 #       run: dotnet test
 
       - name: Add GitHub NuGet source
-        run: dotnet nuget add source "https://nuget.pkg.github.com/01Dri/index.json" --name "github" --username "01Dri" --password "${{ secrets.DEFAULT_TOKEN }}" --store-password-in-clear-text
+        run: dotnet nuget add source "https://nuget.pkg.github.com/01Dri/index.json" --name "github" --username "01Dri" --password "${{ secrets.NUGET_GITHUB_TOKEN }}" --store-password-in-clear-text
 
       - name: Publish to GitHub Packages (NuGet)
-        run: dotnet nuget push **/bin/Release/*.nupkg --source "github" --api-key "${{ secrets.DEFAULT_TOKEN }}"
+        run: dotnet nuget push **/bin/Release/*.nupkg --source "github" --api-key "${{ secrets.NUGET_GITHUB_TOKEN }}"
+
