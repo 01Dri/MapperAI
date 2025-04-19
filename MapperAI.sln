@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{17074582-ABA4-4AFF-8FF0-94CC2B158E30}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{99E54056-3F0C-4C0A-A891-F9999DBAA4C5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapperAI.Core", "src\MapperAI.Core\MapperAI.Core.csproj", "{BA6D4D97-2B17-4B06-B73F-942D429AF7F8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MapperAI.Test", "test\MapperAI.Test\MapperAI.Test.csproj", "{8B3E109D-96CA-4B6D-B379-6AF70646DC25}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{BA6D4D97-2B17-4B06-B73F-942D429AF7F8} = {17074582-ABA4-4AFF-8FF0-94CC2B158E30}
+		{8B3E109D-96CA-4B6D-B379-6AF70646DC25} = {99E54056-3F0C-4C0A-A891-F9999DBAA4C5}
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BA6D4D97-2B17-4B06-B73F-942D429AF7F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA6D4D97-2B17-4B06-B73F-942D429AF7F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA6D4D97-2B17-4B06-B73F-942D429AF7F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA6D4D97-2B17-4B06-B73F-942D429AF7F8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B3E109D-96CA-4B6D-B379-6AF70646DC25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B3E109D-96CA-4B6D-B379-6AF70646DC25}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B3E109D-96CA-4B6D-B379-6AF70646DC25}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B3E109D-96CA-4B6D-B379-6AF70646DC25}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
