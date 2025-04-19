@@ -1,0 +1,55 @@
+﻿using MapperIA.Core.Clients;
+using MapperIA.Core.Clients.Models;
+using MapperIA.Core.Enums;
+using MapperIA.Core.Mappers;
+using MapperIA.Core.Mappers.Interfaces;
+using MapperIA.Core.Serializers;
+
+namespace MapperAI.Test;
+
+public class PdfMapperTests
+{
+    private readonly IPDFMapper _pdfMapper = new PdfMapper(new MapperSerializer(), new ClientFactoryAI(new MapperSerializer()));
+    private readonly ClientConfiguration _clientConfiguration = new ()
+    {
+        Type = ModelType.Gemini,
+        Model = "gemini-2.0-flash",
+        ApiKey = "AIzaSyC-HuoPAXqLdv_CH_lU9bvkvkME_QcyVC0"
+    };
+
+    [Fact]
+    public async Task Test1()
+    {
+        var pdfPath = Path.Combine(@"../../../Curriculo - Diego.pdf");
+        CurriculumModel? curriculumModel =  await _pdfMapper.MapAsync<CurriculumModel>(pdfPath, _clientConfiguration);
+        Assert.Contains("Uninter", curriculumModel?.Faculdade);
+        Assert.Equal("Análise e desenvolvimento de sistemas EAD", curriculumModel?.Curso);
+        Assert.Equal(2, curriculumModel?.Projects.Count);
+        Assert.Equal("diegomagalhaesdev@gmail.com", curriculumModel?.Email);
+        
+        var expectedProjectNames = new List<string> { "ReclameTrancoso", "VTHoftalon" };
+        var actualProjectNames = curriculumModel?.Projects.Select(p => p.Nome).ToList();
+
+        Assert.Equal(expectedProjectNames, actualProjectNames);
+
+    }
+}
+
+
+public class CurriculumModel
+{
+    public string Faculdade { get; set; }
+    public string Curso { get; set; }
+    public string Email { get; set; }
+        
+        
+    public List<CurriculumProjects> Projects { get; set; }
+
+}
+
+
+public class CurriculumProjects
+{
+    public string Nome { get; set; }
+    public List<string> Tecnologias { get; set; } = new List<string>();
+}
