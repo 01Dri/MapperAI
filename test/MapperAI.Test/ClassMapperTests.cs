@@ -12,7 +12,7 @@ public class ClassMapperTests
     private readonly IClassMapper _classClassMapper = new ClassMapper(new MapperSerializer(), new ClientFactoryAI(new MapperSerializer()));
     private readonly ClientConfiguration _clientConfiguration = new ()
     {
-        Type = ModelType.Ollama,
+        Type = ModelType.Gemini,
         Model = "deepseek-r1",
         ApiKey = Environment.GetEnvironmentVariable("GEMINI_KEY")
     };

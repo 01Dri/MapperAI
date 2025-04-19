@@ -15,7 +15,7 @@ public class PdfMapperTests
     {
         Type = ModelType.Gemini,
         Model = "gemini-2.0-flash",
-        ApiKey = "AIzaSyC-HuoPAXqLdv_CH_lU9bvkvkME_QcyVC0"
+        ApiKey = Environment.GetEnvironmentVariable("GEMINI_KEY")
     };
 
     [Fact]
