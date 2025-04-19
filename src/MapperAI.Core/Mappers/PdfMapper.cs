@@ -1,30 +1,32 @@
 ﻿using iText.Kernel.Pdf;
 using iText.Kernel.Pdf.Canvas.Parser;
-using MapperIA.Core.Clients.Interfaces;
-using MapperIA.Core.Clients.Models;
-using MapperIA.Core.Initializers;
-using MapperIA.Core.Mappers.Interfaces;
+using MapperAI.Core.Clients.Interfaces;
+using MapperAI.Core.Clients.Models;
+using MapperAI.Core.Initializers;
+using MapperAI.Core.Mappers.Interfaces;
 using MapperIA.Core.Serializers.Interfaces;
 
-namespace MapperIA.Core.Mappers;
+namespace MapperAI.Core.Mappers;
 
 public class PdfMapper : IPDFMapper
 {
     private readonly IMapperSerializer _serializer;
-    private readonly IClientFactoryAI _iai;
+    private readonly IClientFactoryAI _clientFactoryAi;
 
-    public PdfMapper(IMapperSerializer serializer, IClientFactoryAI iai)
+    public PdfMapper(IMapperSerializer serializer, IClientFactoryAI clientFactoryAi)
     {
         _serializer = serializer;
-        _iai = iai;
+        _clientFactoryAi = clientFactoryAi;
     }
 
 
     public async Task<T?> MapAsync<T>(string pdfPath, ClientConfiguration configuration, CancellationToken cancellationToken = default) where T : class, new()
     {
-        IClientAI iai = _iai.CreateClient(configuration);
+        IClientAI iai = _clientFactoryAi.CreateClient(configuration);
         string pdfContent = ExtractPdfContent(pdfPath);
         T destinyObject = new T();
+        
+        // Ajustar esse codigo de initializer
         new DependencyInitializerFacade(destinyObject, new DependencyInitializer())
             .Initialize();
         string prompt = CreatePrompt(pdfContent, _serializer.Serialize(destinyObject));

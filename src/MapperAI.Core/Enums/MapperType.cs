@@ -1,4 +1,4 @@
-﻿namespace MapperIA.Core.Enums;
+﻿namespace MapperAI.Core.Enums;
 
 public enum MapperType
 {

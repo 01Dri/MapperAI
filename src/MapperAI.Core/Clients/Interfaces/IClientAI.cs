@@ -1,6 +1,6 @@
-﻿using MapperIA.Core.Clients.Models;
+﻿using MapperAI.Core.Clients.Models;
 
-namespace MapperIA.Core.Clients.Interfaces;
+namespace MapperAI.Core.Clients.Interfaces;
 
 public interface IClientAI
 {

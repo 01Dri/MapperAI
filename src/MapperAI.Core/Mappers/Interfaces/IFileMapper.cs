@@ -1,11 +1,11 @@
-﻿using MapperIA.Core.Clients.Models;
-using MapperIA.Core.Mappers.Models;
+﻿using MapperAI.Core.Clients.Models;
+using MapperAI.Core.Mappers.Models;
 
-namespace MapperIA.Core.Mappers.Interfaces;
+namespace MapperAI.Core.Mappers.Interfaces;
 
 public interface IFileMapper
 {
-    Task<List<ClassContent>> MapAsync
+    Task MapAsync
     (
         FileMapperConfiguration configuration,
         ClientConfiguration clientConfiguration,

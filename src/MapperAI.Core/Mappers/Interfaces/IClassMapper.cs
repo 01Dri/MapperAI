@@ -1,6 +1,6 @@
-﻿using MapperIA.Core.Clients.Models;
+﻿using MapperAI.Core.Clients.Models;
 
-namespace MapperIA.Core.Mappers.Interfaces;
+namespace MapperAI.Core.Mappers.Interfaces;
 
 public interface IClassMapper
 {

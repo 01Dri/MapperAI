@@ -1,5 +1,5 @@
 ﻿
-namespace MapperIA.Core.Exceptions_;
+namespace MapperAI.Core.Exceptions;
 
 public class ConverterIAException : Exception
 {

@@ -1,8 +1,9 @@
-﻿using MapperIA.Core.Clients.Interfaces;
-using MapperIA.Core.Clients.Models;
+﻿using MapperAI.Core.Clients.Interfaces;
+using MapperAI.Core.Clients.Models;
+using MapperAI.Core.Enums;
 using MapperIA.Core.Serializers.Interfaces;
 
-namespace MapperIA.Core.Clients;
+namespace MapperAI.Core.Clients;
 
 public class ClientFactoryAI : IClientFactoryAI
 {
@@ -17,6 +18,9 @@ public class ClientFactoryAI : IClientFactoryAI
     {
         switch (configuration.Type)
         {
+            case ModelType.Ollama:
+                return new OllamaClientAI(configuration, _serializer);
+                       
             default:
                 return new GeminiClientAI(configuration, _serializer);
         }

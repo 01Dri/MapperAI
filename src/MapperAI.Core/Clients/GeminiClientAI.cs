@@ -1,11 +1,11 @@
 ﻿using System.Text;
 using System.Text.Json;
-using MapperIA.Core.Clients.Interfaces;
-using MapperIA.Core.Clients.Models;
-using MapperIA.Core.Exceptions_;
+using MapperAI.Core.Clients.Interfaces;
+using MapperAI.Core.Clients.Models;
+using MapperAI.Core.Exceptions;
 using MapperIA.Core.Serializers.Interfaces;
 
-namespace MapperIA.Core.Clients;
+namespace MapperAI.Core.Clients;
 
 public class GeminiClientAI : ClientBaseAI ,IClientAI
 {
@@ -67,15 +67,24 @@ public class GeminiClientAI : ClientBaseAI ,IClientAI
     if (string.IsNullOrWhiteSpace(rawText))
       return string.Empty;
 
-    // Remove blocos de código Markdown como ```json e ```
     rawText = rawText.Trim();
+
     if (rawText.StartsWith("```"))
     {
-      int start = rawText.IndexOf("{");
-      int end = rawText.LastIndexOf("}");
+      int start = rawText.IndexOf("[");
+      int end = rawText.LastIndexOf("]");
       if (start >= 0 && end > start)
       {
         rawText = rawText.Substring(start, end - start + 1);
+      }
+      else
+      {
+        start = rawText.IndexOf("{");
+        end = rawText.LastIndexOf("}");
+        if (start >= 0 && end > start)
+        {
+          rawText = rawText.Substring(start, end - start + 1);
+        }
       }
     }
 

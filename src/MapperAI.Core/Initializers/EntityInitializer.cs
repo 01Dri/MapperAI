@@ -1,7 +1,6 @@
 ﻿using System.Reflection;
-using MapperIA.Core.Models;
 
-namespace MapperIA.Core.Initializers;
+namespace MapperAI.Core.Initializers;
 
 public static class EntityInitializer
 {

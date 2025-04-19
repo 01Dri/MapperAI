@@ -1,25 +1,25 @@
-﻿using MapperIA.Core.Clients.Interfaces;
-using MapperIA.Core.Clients.Models;
-using MapperIA.Core.Mappers.Interfaces;
+﻿using MapperAI.Core.Clients.Interfaces;
+using MapperAI.Core.Clients.Models;
+using MapperAI.Core.Mappers.Interfaces;
 using MapperIA.Core.Serializers.Interfaces;
 
-namespace MapperIA.Core.Mappers;
+namespace MapperAI.Core.Mappers;
 
 public class ClassMapper : IClassMapper
 {
     private readonly IMapperSerializer _serializer;
-    private readonly IClientFactoryAI _iai;
+    private readonly IClientFactoryAI _clientFactoryAi;
 
-    public ClassMapper(IMapperSerializer serializer, IClientFactoryAI iai)
+    public ClassMapper(IMapperSerializer serializer, IClientFactoryAI clientFactoryAi)
     {
         _serializer = serializer;
-        _iai = iai;
+        _clientFactoryAi = clientFactoryAi;
     }
 
 
     public async Task<TK?> MapAsync<T, TK>(T origin, ClientConfiguration configuration, CancellationToken cancellationToken = default) where T : class where TK : class, new()
     {
-        IClientAI iai = _iai.CreateClient(configuration);
+        IClientAI iai = _clientFactoryAi.CreateClient(configuration);
         TK destinyObject = new TK();
         string prompt = CreatePrompt(_serializer.Serialize(origin), destinyObject);
         var result = await iai.SendAsync(prompt, cancellationToken);

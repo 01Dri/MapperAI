@@ -1,4 +1,4 @@
-﻿namespace MapperIA.Core.Clients.Models;
+﻿namespace MapperAI.Core.Clients.Models;
 
 public class ClientResponse
 {

@@ -1,4 +1,5 @@
-﻿namespace MapperIA.Core.Mappers.Models;
+﻿
+namespace MapperAI.Core.Mappers.Models;
 
 public class ClassContent
 {

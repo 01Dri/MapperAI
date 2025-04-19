@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace MapperIA.Core.Initializers.Interfaces;
+namespace MapperAI.Core.Initializers.Interfaces;
 
 public interface IDependencyInitializer
 {

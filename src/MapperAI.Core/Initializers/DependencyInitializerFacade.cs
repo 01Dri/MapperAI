@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
-using MapperIA.Core.Initializers.Interfaces;
+using MapperAI.Core.Initializers.Interfaces;
 
-namespace MapperIA.Core.Initializers;
+namespace MapperAI.Core.Initializers;
 
 public class DependencyInitializerFacade
 {

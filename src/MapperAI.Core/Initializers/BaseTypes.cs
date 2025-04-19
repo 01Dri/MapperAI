@@ -1,4 +1,4 @@
-﻿namespace MapperIA.Core.Models;
+﻿namespace MapperAI.Core.Initializers;
 
 public class BaseTypes
 {

@@ -1,8 +1,9 @@
-﻿using MapperIA.Core.Clients;
-using MapperIA.Core.Clients.Models;
-using MapperIA.Core.Enums;
-using MapperIA.Core.Mappers;
-using MapperIA.Core.Mappers.Interfaces;
+﻿using MapperAI.Core.Clients;
+using MapperAI.Core.Clients.Models;
+using MapperAI.Core.Enums;
+using MapperAI.Core.Mappers;
+using MapperAI.Core.Mappers.Interfaces;
+using MapperAI.Core.Serializers;
 using MapperIA.Core.Serializers;
 
 namespace MapperAI.Test;

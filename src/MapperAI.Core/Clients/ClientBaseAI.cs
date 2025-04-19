@@ -1,7 +1,7 @@
-﻿using MapperIA.Core.Clients.Models;
+﻿using MapperAI.Core.Clients.Models;
 using MapperIA.Core.Serializers.Interfaces;
 
-namespace MapperIA.Core.Clients;
+namespace MapperAI.Core.Clients;
 
 public class ClientBaseAI
 {

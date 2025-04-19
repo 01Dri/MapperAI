@@ -1,7 +1,5 @@
 ﻿
-using MapperIA.Core.Models;
-
-namespace MapperIA.Core.Initializers;
+namespace MapperAI.Core.Initializers;
 
 public class BaseModelJson
 {
