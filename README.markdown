@@ -1,6 +1,6 @@
 # MapperAI
 
-- NuGet: MapperIA.Core
+- NuGet: MapperAI.Core
 
 ---
 
@@ -34,7 +34,7 @@ MapperAI currently offers the following functionalities:
 To install **MapperAI**, use NuGet:
 
 ```bash
-dotnet add package MapperIA.Core
+dotnet add package MapperAI.Core
 ```
 
 ## Project Status
