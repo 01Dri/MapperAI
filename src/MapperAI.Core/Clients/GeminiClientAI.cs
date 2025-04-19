@@ -53,41 +53,17 @@ public class GeminiClientAI : ClientBaseAI ,IClientAI
             .GetString();
 
           if (text == null) throw new Exception("Error");
-          var textSanitized = SanitizeJson(text);
-          return new ClientResponse { Value = textSanitized};
+          var cleanedJson = text
+            .Replace("```json", string.Empty)
+            .Replace("```", string.Empty)
+            .Replace("\n", string.Empty)
+            .Trim();
+          // var textSanitized = SanitizeJson(text);
+          return new ClientResponse { Value = cleanedJson};
         }
         catch (Exception ex)
         {
           throw new ConverterIAException($"An error occurred during processing: {ex.Message}");
         }
     }
-  
-  private string SanitizeJson(string rawText)
-  {
-    if (string.IsNullOrWhiteSpace(rawText))
-      return string.Empty;
-
-    rawText = rawText.Trim();
-
-    if (rawText.StartsWith("```"))
-    {
-      int start = rawText.IndexOf("[");
-      int end = rawText.LastIndexOf("]");
-      if (start >= 0 && end > start)
-      {
-        rawText = rawText.Substring(start, end - start + 1);
-      }
-      else
-      {
-        start = rawText.IndexOf("{");
-        end = rawText.LastIndexOf("}");
-        if (start >= 0 && end > start)
-        {
-          rawText = rawText.Substring(start, end - start + 1);
-        }
-      }
-    }
-
-    return rawText.Trim();
-  }
 }
