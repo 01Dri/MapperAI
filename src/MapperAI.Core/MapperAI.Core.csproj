@@ -4,6 +4,12 @@
         <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <Title>MapperAI-Alpha</Title>
+        <Authors>Dridev</Authors>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <Version>0.0.1-alpha</Version>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <RepositoryUrl>https://github.com/01Dri/MapperAI</RepositoryUrl>
         <RootNamespace>MapperAI.Core</RootNamespace>
     </PropertyGroup>
 
