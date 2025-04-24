@@ -56,8 +56,9 @@ public class GeminiClientAI : ClientBaseAI ,IClientAI
           var cleanedJson = text
             .Replace("```json", string.Empty)
             .Replace("```", string.Empty)
-            .Replace("\n", string.Empty)
+            .Replace("\\$", "\\\\$") 
             .Trim();
+
           // var textSanitized = SanitizeJson(text);
           return new ClientResponse { Value = cleanedJson};
         }

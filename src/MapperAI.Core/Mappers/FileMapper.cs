@@ -94,6 +94,7 @@ public class FileMapper : IFileMapper
             - Follow **all best practices, conventions, and idiomatic usage** of {configuration.Extension}.
             - Use clean code principles: clear naming, proper formatting, consistent style, and modular design.
             - Avoid deprecated patterns or anti-patterns.
+            - **Escape all backslashes properly for JSON**: every single `\` must become `\\` to ensure valid JSON strings (especially in paths, regexes, or PHP variables like `\$`).
             - **DO NOT** return markdown, explanations, comments, or any text outside of the JSON array.
             - Your response **must be directly deserializable** into List<ClassContent>.
 
