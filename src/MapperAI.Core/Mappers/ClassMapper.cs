@@ -1,5 +1,6 @@
 ﻿using MapperAI.Core.Clients.Interfaces;
 using MapperAI.Core.Clients.Models;
+using MapperAI.Core.Exceptions;
 using MapperAI.Core.Mappers.Interfaces;
 using MapperAI.Core.Serializers.Interfaces;
 
@@ -9,22 +10,27 @@ public class ClassMapper : IClassMapper
 {
     private readonly IMapperSerializer _serializer;
     private readonly IMapperClientFactory _mapperClientFactory;
+    private readonly MapperClientConfiguration _clientConfiguration;
+    
 
-    public ClassMapper(IMapperSerializer serializer, IMapperClientFactory mapperClientFactory)
+    public ClassMapper(IMapperSerializer serializer, IMapperClientFactory mapperClientFactory, MapperClientConfiguration clientConfiguration)
     {
         _serializer = serializer;
         _mapperClientFactory = mapperClientFactory;
+        _clientConfiguration = clientConfiguration;
     }
 
 
-    public async Task<TK?> MapAsync<T, TK>(T origin, MapperClientConfiguration configuration, CancellationToken cancellationToken = default) where T : class where TK : class, new()
+    public async Task<TK?> MapAsync<T, TK>(T origin, CancellationToken cancellationToken = default) where T : class where TK : class, new()
     {
-        IMapperClient mapperClient = _mapperClientFactory.CreateClient(configuration);
+        if (_clientConfiguration == null) throw new MapperException("Client configuration is null.");
+        IMapperClient mapperClient = _mapperClientFactory.CreateClient(_clientConfiguration);
         TK destinyObject = new TK();
         string prompt = CreatePrompt(_serializer.Serialize(origin), destinyObject);
         var result = await mapperClient.SendAsync(prompt, cancellationToken);
         return _serializer.Deserialize<TK>(result.Value);
     }
+
 
     private string CreatePrompt<TK>(string originSerialized, TK destinyObject) where TK : class, new()
     {

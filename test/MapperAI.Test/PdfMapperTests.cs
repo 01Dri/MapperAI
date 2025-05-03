@@ -1,27 +1,26 @@
-﻿using MapperAI.Core.Clients;
-using MapperAI.Core.Clients.Models;
+﻿using MapperAI.Core.Clients.Models;
 using MapperAI.Core.Enums;
 using MapperAI.Core.Mappers;
 using MapperAI.Core.Mappers.Interfaces;
-using MapperAI.Core.Serializers;
 
 namespace MapperAI.Test;
 
-public class PdfMapperTests
+public class PdfMapperTests : BaseTests
 {
-    private readonly IPDFMapper _pdfMapper = new PdfMapper(new MapperSerializer(), new MapperMapperClientFactory(new MapperSerializer()));
-    private readonly MapperClientConfiguration _mapperClientConfiguration = new ()
+    private readonly IPDFMapper _pdfMapper;
+    private readonly MapperClientConfiguration _clientConfiguration;
+
+    public PdfMapperTests()
     {
-        Type = ModelType.Gemini,
-        Model = "gemini-2.0-flash",
-        ApiKey = Environment.GetEnvironmentVariable("GEMINI_KEY")
-    };
+        _clientConfiguration = new MapperClientConfiguration("gemini-2.0-flash", Environment.GetEnvironmentVariable("GEMINI_KEY"),ModelType.Gemini);
+        _pdfMapper = new PdfMapper(Serializer, Factory, _clientConfiguration);
+    }
 
     [Fact]
     public async Task Test1()
     {
         var pdfPath = Path.Combine(@"../../../Curriculo - Diego.pdf");
-        CurriculumModel? curriculumModel =  await _pdfMapper.MapAsync<CurriculumModel>(pdfPath, _mapperClientConfiguration);
+        CurriculumModel? curriculumModel =  await _pdfMapper.MapAsync<CurriculumModel>(pdfPath);
         Assert.Contains("Uninter", curriculumModel?.Faculdade);
         Assert.Equal("Análise e desenvolvimento de sistemas EAD", curriculumModel?.Curso);
         Assert.Equal(2, curriculumModel?.Projects.Count);

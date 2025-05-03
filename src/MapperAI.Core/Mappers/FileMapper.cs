@@ -12,17 +12,18 @@ public class FileMapper : IFileMapper
 
     private readonly IMapperClientFactory _mapperClientFactory;
     private readonly IMapperSerializer _serializer;
+    private readonly MapperClientConfiguration _clientConfiguration;
 
-    public FileMapper(IMapperClientFactory mapperClientFactory, IMapperSerializer serializer)
+    public FileMapper(IMapperClientFactory mapperClientFactory, IMapperSerializer serializer, MapperClientConfiguration clientConfiguration)
     {
         _mapperClientFactory = mapperClientFactory;
         _serializer = serializer;
+        _clientConfiguration = clientConfiguration;
     }
 
-    public async Task MapAsync(FileMapperConfiguration configuration, MapperClientConfiguration mapperClientConfiguration,
-        CancellationToken cancellationToken = default)
+    public async Task MapAsync(FileMapperConfiguration configuration, CancellationToken cancellationToken = default)
     {
-        IMapperClient mapperClient = _mapperClientFactory.CreateClient(mapperClientConfiguration);
+        IMapperClient mapperClient = _mapperClientFactory.CreateClient(_clientConfiguration);
         List<MapperClassContent> filesToMap = GetFilesToMap(configuration);
         string prompt = CreatePrompt(filesToMap, configuration);
         MapperClientResponse result = await mapperClient.SendAsync(prompt, cancellationToken);

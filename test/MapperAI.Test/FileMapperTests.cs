@@ -1,26 +1,27 @@
-﻿using MapperAI.Core.Clients;
-using MapperAI.Core.Clients.Models;
+﻿using MapperAI.Core.Clients.Models;
 using MapperAI.Core.Enums;
-using MapperAI.Core.Helpers;
 using MapperAI.Core.Mappers;
+using MapperAI.Core.Mappers.Interfaces;
 using MapperAI.Core.Mappers.Models;
-using MapperAI.Core.Serializers;
+using MapperAI.Test.Helpers;
 
 namespace MapperAI.Test;
 
-public class FileMapperTests
+public class FileMapperTests : BaseTests
 {
-    private readonly FileMapper _mapper = new (new MapperMapperClientFactory(new MapperSerializer()), new MapperSerializer());
 
-    private readonly MapperClientConfiguration _mapperClientConfiguration = new()
-    {
-        Type = ModelType.Gemini,
-        Model = "gemini-2.0-flash",
-        ApiKey = Environment.GetEnvironmentVariable("GEMINI_KEY")
-    };
+    private readonly MapperClientConfiguration _clientConfiguration;
+    private readonly IFileMapper _mapper;
 
     private string InputFolder => Path.Combine(FoldersHelpers.GetProjectDefaultPath(), "Class");
     private string OutputFolder => Path.Combine(FoldersHelpers.GetProjectDefaultPath(), "MappedClasses");
+
+    public FileMapperTests()
+    {
+        _clientConfiguration = new MapperClientConfiguration("gemini-2.0-flash", Environment.GetEnvironmentVariable("GEMINI_KEY"),ModelType.Gemini);
+        _mapper = new FileMapper(Factory, Serializer, _clientConfiguration);
+
+    }
 
 
     [Fact]
@@ -32,7 +33,7 @@ public class FileMapperTests
             NameSpace = "MapperAI.Test.MappedClasses",
             Extension = "go",
         };
-        await _mapper.MapAsync(configuration, _mapperClientConfiguration);
+        await _mapper.MapAsync(configuration);
         var files = Directory.GetFiles(OutputFolder);
         Assert.True(files.Length == 4);
         Assert.True(files.All(x => x.Contains(".go")));
@@ -44,15 +45,16 @@ public class FileMapperTests
     public async Task Test_Should_Create_4_Files_With_CSharp_Extension()
     {
 
+        string extesionToMap = "js";
         FileMapperConfiguration configuration = new FileMapperConfiguration(InputFolder, OutputFolder)
         {
             NameSpace = "MapperAI.Test.MappedClasses",
-            Extension = "php"
+            Extension = extesionToMap
         };
-        await _mapper.MapAsync(configuration, _mapperClientConfiguration);
+        await _mapper.MapAsync(configuration);
         var files = Directory.GetFiles(OutputFolder);
         Assert.True(files.Length == 4);
-        Assert.True(files.All(x => x.Contains(".php")));
+        Assert.True(files.All(x => x.Contains($".{extesionToMap}")));
 
 
     }
@@ -68,7 +70,7 @@ public class FileMapperTests
             FileName = "Carro.java",
             LanguageVersion = "13"
         };
-        await _mapper.MapAsync(configuration, _mapperClientConfiguration);
+        await _mapper.MapAsync(configuration);
         var files = Directory.GetFiles(OutputFolder);
         Assert.True(files.Length == 1);
         Assert.True(files.All(x => x.Contains(".cs")));

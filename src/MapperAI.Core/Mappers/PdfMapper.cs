@@ -12,17 +12,19 @@ public class PdfMapper : IPDFMapper
 {
     private readonly IMapperSerializer _serializer;
     private readonly IMapperClientFactory _mapperClientFactory;
+    private readonly MapperClientConfiguration _clientConfiguration;
 
-    public PdfMapper(IMapperSerializer serializer, IMapperClientFactory mapperClientFactory)
+    public PdfMapper(IMapperSerializer serializer, IMapperClientFactory mapperClientFactory, MapperClientConfiguration clientConfiguration)
     {
         _serializer = serializer;
         _mapperClientFactory = mapperClientFactory;
+        _clientConfiguration = clientConfiguration;
     }
 
 
-    public async Task<T?> MapAsync<T>(string pdfPath, MapperClientConfiguration configuration, CancellationToken cancellationToken = default) where T : class, new()
+    public async Task<T?> MapAsync<T>(string pdfPath, CancellationToken cancellationToken = default) where T : class, new()
     {
-        IMapperClient iai = _mapperClientFactory.CreateClient(configuration);
+        IMapperClient iai = _mapperClientFactory.CreateClient(_clientConfiguration);
         string pdfContent = ExtractPdfContent(pdfPath);
         T destinyObject = new T();
         DependencyInitializer.Initialize(destinyObject);
