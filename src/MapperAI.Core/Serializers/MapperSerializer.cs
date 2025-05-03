@@ -1,6 +1,6 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
-using MapperIA.Core.Serializers.Interfaces;
+using MapperAI.Core.Serializers.Interfaces;
 
 namespace MapperAI.Core.Serializers;
 

@@ -1,28 +1,28 @@
 ﻿using MapperAI.Core.Clients.Interfaces;
 using MapperAI.Core.Clients.Models;
 using MapperAI.Core.Enums;
-using MapperIA.Core.Serializers.Interfaces;
+using MapperAI.Core.Serializers.Interfaces;
 
 namespace MapperAI.Core.Clients;
 
-public class ClientFactoryAI : IClientFactoryAI
+public class MapperClientFactory : IClientFactoryAI
 {
     private readonly IMapperSerializer _serializer;
 
-    public ClientFactoryAI(IMapperSerializer serializer)
+    public MapperClientFactory(IMapperSerializer serializer)
     {
         _serializer = serializer;
     }
 
-    public IClientAI CreateClient(ClientConfiguration configuration)
+    public IClientAI CreateClient(MapperClientConfiguration configuration)
     {
         switch (configuration.Type)
         {
             case ModelType.Ollama:
-                return new OllamaClientAI(configuration, _serializer);
+                return new OllamaMapperClient(configuration, _serializer);
                        
             default:
-                return new GeminiClientAI(configuration, _serializer);
+                return new GeminiMapperClient(configuration, _serializer);
         }
     }
 }

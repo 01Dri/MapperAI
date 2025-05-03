@@ -2,7 +2,7 @@
 
 namespace MapperAI.Core.Clients.Models;
 
-public class ClientConfiguration
+public class MapperClientConfiguration
 {
     public required string Model { get; set; }
     public string? ApiKey { get; set; }

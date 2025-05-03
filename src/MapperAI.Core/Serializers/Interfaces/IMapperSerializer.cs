@@ -1,4 +1,5 @@
-﻿namespace MapperIA.Core.Serializers.Interfaces;
+﻿
+namespace MapperAI.Core.Serializers.Interfaces;
 
 public interface IMapperSerializer
 {

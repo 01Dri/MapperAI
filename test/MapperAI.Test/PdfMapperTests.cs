@@ -4,14 +4,13 @@ using MapperAI.Core.Enums;
 using MapperAI.Core.Mappers;
 using MapperAI.Core.Mappers.Interfaces;
 using MapperAI.Core.Serializers;
-using MapperIA.Core.Serializers;
 
 namespace MapperAI.Test;
 
 public class PdfMapperTests
 {
-    private readonly IPDFMapper _pdfMapper = new PdfMapper(new MapperSerializer(), new ClientFactoryAI(new MapperSerializer()));
-    private readonly ClientConfiguration _clientConfiguration = new ()
+    private readonly IPDFMapper _pdfMapper = new PdfMapper(new MapperSerializer(), new MapperClientFactory(new MapperSerializer()));
+    private readonly MapperClientConfiguration _mapperClientConfiguration = new ()
     {
         Type = ModelType.Gemini,
         Model = "gemini-2.0-flash",
@@ -22,7 +21,7 @@ public class PdfMapperTests
     public async Task Test1()
     {
         var pdfPath = Path.Combine(@"../../../Curriculo - Diego.pdf");
-        CurriculumModel? curriculumModel =  await _pdfMapper.MapAsync<CurriculumModel>(pdfPath, _clientConfiguration);
+        CurriculumModel? curriculumModel =  await _pdfMapper.MapAsync<CurriculumModel>(pdfPath, _mapperClientConfiguration);
         Assert.Contains("Uninter", curriculumModel?.Faculdade);
         Assert.Equal("Análise e desenvolvimento de sistemas EAD", curriculumModel?.Curso);
         Assert.Equal(2, curriculumModel?.Projects.Count);

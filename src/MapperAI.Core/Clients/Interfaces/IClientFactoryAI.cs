@@ -4,5 +4,5 @@ namespace MapperAI.Core.Clients.Interfaces;
 
 public interface IClientFactoryAI
 {
-    IClientAI CreateClient(ClientConfiguration configuration);
+    IClientAI CreateClient(MapperClientConfiguration configuration);
 }

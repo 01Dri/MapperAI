@@ -10,9 +10,9 @@ namespace MapperAI.Test;
 
 public class FileMapperTests
 {
-    private readonly FileMapper _mapper = new FileMapper(new ClientFactoryAI(new MapperSerializer()), new MapperSerializer());
+    private readonly FileMapper _mapper = new (new MapperClientFactory(new MapperSerializer()), new MapperSerializer());
 
-    private readonly ClientConfiguration _clientConfiguration = new()
+    private readonly MapperClientConfiguration _mapperClientConfiguration = new()
     {
         Type = ModelType.Gemini,
         Model = "gemini-2.0-flash",
@@ -32,7 +32,7 @@ public class FileMapperTests
             NameSpace = "MapperAI.Test.MappedClasses",
             Extension = "go",
         };
-        await _mapper.MapAsync(configuration, _clientConfiguration);
+        await _mapper.MapAsync(configuration, _mapperClientConfiguration);
         var files = Directory.GetFiles(OutputFolder);
         Assert.True(files.Length == 4);
         Assert.True(files.All(x => x.Contains(".go")));
@@ -47,12 +47,12 @@ public class FileMapperTests
         FileMapperConfiguration configuration = new FileMapperConfiguration(InputFolder, OutputFolder)
         {
             NameSpace = "MapperAI.Test.MappedClasses",
-            Extension = "c#"
+            Extension = "php"
         };
-        await _mapper.MapAsync(configuration, _clientConfiguration);
+        await _mapper.MapAsync(configuration, _mapperClientConfiguration);
         var files = Directory.GetFiles(OutputFolder);
         Assert.True(files.Length == 4);
-        Assert.True(files.All(x => x.Contains(".cs")));
+        Assert.True(files.All(x => x.Contains(".php")));
 
 
     }
@@ -68,7 +68,7 @@ public class FileMapperTests
             FileName = "Carro.java",
             LanguageVersion = "13"
         };
-        await _mapper.MapAsync(configuration, _clientConfiguration);
+        await _mapper.MapAsync(configuration, _mapperClientConfiguration);
         var files = Directory.GetFiles(OutputFolder);
         Assert.True(files.Length == 1);
         Assert.True(files.All(x => x.Contains(".cs")));

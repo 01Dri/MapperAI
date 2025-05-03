@@ -8,7 +8,7 @@ public interface IFileMapper
     Task MapAsync
     (
         FileMapperConfiguration configuration,
-        ClientConfiguration clientConfiguration,
+        MapperClientConfiguration mapperClientConfiguration,
         CancellationToken cancellationToken = default
     );
 }

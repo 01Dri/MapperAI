@@ -9,8 +9,8 @@ namespace MapperAI.Test;
 
 public class ClassMapperTests
 {
-    private readonly IClassMapper _classClassMapper = new ClassMapper(new MapperSerializer(), new ClientFactoryAI(new MapperSerializer()));
-    private readonly ClientConfiguration _clientConfiguration = new ()
+    private readonly IClassMapper _classClassMapper = new ClassMapper(new MapperSerializer(), new MapperClientFactory(new MapperSerializer()));
+    private readonly MapperClientConfiguration _mapperClientConfiguration = new ()
     {
         Type = ModelType.Gemini,
         Model = "gemini-2.0-flash",
@@ -27,7 +27,7 @@ public class ClassMapperTests
             Name = "Diego"
         };
 
-        var result = await _classClassMapper.MapAsync<Person, PersonDTO>(person, _clientConfiguration);
+        var result = await _classClassMapper.MapAsync<Person, PersonDTO>(person, _mapperClientConfiguration);
         Assert.Equal(person.Name, result?.Name);
     }
 }

@@ -1,7 +1,7 @@
 ﻿using MapperAI.Core.Clients.Interfaces;
 using MapperAI.Core.Clients.Models;
 using MapperAI.Core.Mappers.Interfaces;
-using MapperIA.Core.Serializers.Interfaces;
+using MapperAI.Core.Serializers.Interfaces;
 
 namespace MapperAI.Core.Mappers;
 
@@ -17,12 +17,12 @@ public class ClassMapper : IClassMapper
     }
 
 
-    public async Task<TK?> MapAsync<T, TK>(T origin, ClientConfiguration configuration, CancellationToken cancellationToken = default) where T : class where TK : class, new()
+    public async Task<TK?> MapAsync<T, TK>(T origin, MapperClientConfiguration configuration, CancellationToken cancellationToken = default) where T : class where TK : class, new()
     {
-        IClientAI iai = _clientFactoryAi.CreateClient(configuration);
+        IClientAI client = _clientFactoryAi.CreateClient(configuration);
         TK destinyObject = new TK();
         string prompt = CreatePrompt(_serializer.Serialize(origin), destinyObject);
-        var result = await iai.SendAsync(prompt, cancellationToken);
+        var result = await client.SendAsync(prompt, cancellationToken);
         return _serializer.Deserialize<TK>(result.Value);
     }
 

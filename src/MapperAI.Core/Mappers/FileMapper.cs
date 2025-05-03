@@ -3,7 +3,7 @@ using MapperAI.Core.Clients.Interfaces;
 using MapperAI.Core.Clients.Models;
 using MapperAI.Core.Mappers.Interfaces;
 using MapperAI.Core.Mappers.Models;
-using MapperIA.Core.Serializers.Interfaces;
+using MapperAI.Core.Serializers.Interfaces;
 
 namespace MapperAI.Core.Mappers;
 
@@ -19,27 +19,25 @@ public class FileMapper : IFileMapper
         _serializer = serializer;
     }
 
-    public async Task MapAsync(FileMapperConfiguration configuration, ClientConfiguration clientConfiguration,
+    public async Task MapAsync(FileMapperConfiguration configuration, MapperClientConfiguration mapperClientConfiguration,
         CancellationToken cancellationToken = default)
     {
-        IClientAI client = _clientFactoryAi.CreateClient(clientConfiguration);
-        List<ClassContent> filesToMap = GetFilesToMap(configuration);
+        IClientAI client = _clientFactoryAi.CreateClient(mapperClientConfiguration);
+        List<MapperClassContent> filesToMap = GetFilesToMap(configuration);
         string prompt = CreatePrompt(filesToMap, configuration);
-        ClientResponse result = await client.SendAsync(prompt, cancellationToken);
-        List<ClassContent>? contents = _serializer.Deserialize<List<ClassContent>>(result.Value);
+        MapperClientResponse result = await client.SendAsync(prompt, cancellationToken);
+        List<MapperClassContent>? contents = _serializer.Deserialize<List<MapperClassContent>>(result.Value);
         if (contents != null && contents.Any())
         {
             CreateFiles(contents, configuration.OutputFolder);
+            return;
         }
-        else
-        {
-            throw new SerializationException("Failed to serialize contents");
-        }
+        throw new SerializationException("Failed to serialize contents");
     }
 
-    private void CreateFiles(List<ClassContent> contents, string outputFolderPath)
+    private void CreateFiles(List<MapperClassContent> contents, string outputFolderPath)
     {
-        if (!Directory.Exists(outputFolderPath))
+         if (!Directory.Exists(outputFolderPath))
         {
             Directory.CreateDirectory(outputFolderPath);
         }
@@ -51,7 +49,7 @@ public class FileMapper : IFileMapper
         });
     }
 
-    private string CreatePrompt(List<ClassContent> filesToMap, FileMapperConfiguration configuration)
+    private string CreatePrompt(List<MapperClassContent> filesToMap, FileMapperConfiguration configuration)
     {
         var serializedFiles = _serializer.Serialize(filesToMap);
 
@@ -103,25 +101,24 @@ public class FileMapper : IFileMapper
             ";
         }
 
-    private List<ClassContent> GetFilesToMap(FileMapperConfiguration configuration)
+    private List<MapperClassContent> GetFilesToMap(FileMapperConfiguration configuration)
     {
         string path;
         if (configuration.IsUniqueClass)
         {
             if (configuration.FileName == null) throw new ArgumentException("FileName is required!");
             path = Path.Combine(configuration.InputFolder, configuration.FileName);
-            var content = new ClassContent()
+            var content = new MapperClassContent()
             {
                 Name = Path.GetFileName(configuration.FileName),
                 Content = File.ReadAllText(path)
             };
-            return new List<ClassContent>() { content };
+            return new List<MapperClassContent>() { content };
         }
 
-        var files = Directory.GetFiles(configuration.InputFolder);
         return Directory.GetFiles(configuration.InputFolder)
             .Where(file => file.Contains("."))
-            .Select(x => new ClassContent()
+            .Select(x => new MapperClassContent()
             {
                 Name = Path.GetFileName(x),
                 Content = File.ReadAllText(x)
