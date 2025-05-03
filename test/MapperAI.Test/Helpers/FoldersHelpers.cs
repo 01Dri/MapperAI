@@ -1,4 +1,5 @@
-﻿namespace MapperAI.Core.Helpers;
+﻿
+namespace MapperAI.Test.Helpers;
 
 public class FoldersHelpers
 {

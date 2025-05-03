@@ -1,11 +1,10 @@
-﻿using MapperAI.Core.Clients.Models;
+﻿namespace MapperAI.Core.Mappers.Interfaces;
 
-namespace MapperAI.Core.Mappers.Interfaces;
-
-public interface IClassMapper
+public interface IClassMapper 
 {
-    Task<TK?> MapAsync<T, TK>(T origin, ClientConfiguration configuration, CancellationToken cancellationToken = default)
+    Task<TK?> MapAsync<T, TK>(T origin, CancellationToken cancellationToken = default)
         where T : class
         where TK : class, new();
-    
+
+
 }

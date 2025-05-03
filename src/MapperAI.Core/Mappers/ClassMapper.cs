@@ -1,30 +1,36 @@
 ﻿using MapperAI.Core.Clients.Interfaces;
 using MapperAI.Core.Clients.Models;
+using MapperAI.Core.Exceptions;
 using MapperAI.Core.Mappers.Interfaces;
-using MapperIA.Core.Serializers.Interfaces;
+using MapperAI.Core.Serializers.Interfaces;
 
 namespace MapperAI.Core.Mappers;
 
 public class ClassMapper : IClassMapper
 {
     private readonly IMapperSerializer _serializer;
-    private readonly IClientFactoryAI _clientFactoryAi;
+    private readonly IMapperClientFactory _mapperClientFactory;
+    private readonly MapperClientConfiguration _clientConfiguration;
+    
 
-    public ClassMapper(IMapperSerializer serializer, IClientFactoryAI clientFactoryAi)
+    public ClassMapper(IMapperSerializer serializer, IMapperClientFactory mapperClientFactory, MapperClientConfiguration clientConfiguration)
     {
         _serializer = serializer;
-        _clientFactoryAi = clientFactoryAi;
+        _mapperClientFactory = mapperClientFactory;
+        _clientConfiguration = clientConfiguration;
     }
 
 
-    public async Task<TK?> MapAsync<T, TK>(T origin, ClientConfiguration configuration, CancellationToken cancellationToken = default) where T : class where TK : class, new()
+    public async Task<TK?> MapAsync<T, TK>(T origin, CancellationToken cancellationToken = default) where T : class where TK : class, new()
     {
-        IClientAI iai = _clientFactoryAi.CreateClient(configuration);
+        if (_clientConfiguration == null) throw new MapperException("Client configuration is null.");
+        IMapperClient mapperClient = _mapperClientFactory.CreateClient(_clientConfiguration);
         TK destinyObject = new TK();
         string prompt = CreatePrompt(_serializer.Serialize(origin), destinyObject);
-        var result = await iai.SendAsync(prompt, cancellationToken);
+        var result = await mapperClient.SendAsync(prompt, cancellationToken);
         return _serializer.Deserialize<TK>(result.Value);
     }
+
 
     private string CreatePrompt<TK>(string originSerialized, TK destinyObject) where TK : class, new()
     {

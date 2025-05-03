@@ -4,33 +4,32 @@ using MapperAI.Core.Clients.Interfaces;
 using MapperAI.Core.Clients.Models;
 using MapperAI.Core.Initializers;
 using MapperAI.Core.Mappers.Interfaces;
-using MapperIA.Core.Serializers.Interfaces;
+using MapperAI.Core.Serializers.Interfaces;
 
 namespace MapperAI.Core.Mappers;
 
 public class PdfMapper : IPDFMapper
 {
     private readonly IMapperSerializer _serializer;
-    private readonly IClientFactoryAI _clientFactoryAi;
+    private readonly IMapperClientFactory _mapperClientFactory;
+    private readonly MapperClientConfiguration _clientConfiguration;
 
-    public PdfMapper(IMapperSerializer serializer, IClientFactoryAI clientFactoryAi)
+    public PdfMapper(IMapperSerializer serializer, IMapperClientFactory mapperClientFactory, MapperClientConfiguration clientConfiguration)
     {
         _serializer = serializer;
-        _clientFactoryAi = clientFactoryAi;
+        _mapperClientFactory = mapperClientFactory;
+        _clientConfiguration = clientConfiguration;
     }
 
 
-    public async Task<T?> MapAsync<T>(string pdfPath, ClientConfiguration configuration, CancellationToken cancellationToken = default) where T : class, new()
+    public async Task<T?> MapAsync<T>(string pdfPath, CancellationToken cancellationToken = default) where T : class, new()
     {
-        IClientAI iai = _clientFactoryAi.CreateClient(configuration);
+        IMapperClient iai = _mapperClientFactory.CreateClient(_clientConfiguration);
         string pdfContent = ExtractPdfContent(pdfPath);
         T destinyObject = new T();
-        
-        // Ajustar esse codigo de initializer
-        new DependencyInitializerFacade(destinyObject, new DependencyInitializer())
-            .Initialize();
+        DependencyInitializer.Initialize(destinyObject);
         string prompt = CreatePrompt(pdfContent, _serializer.Serialize(destinyObject));
-        ClientResponse result = await iai.SendAsync(prompt, cancellationToken);
+        MapperClientResponse result = await iai.SendAsync(prompt, cancellationToken);
         return _serializer.Deserialize<T>(result.Value);
     }
 

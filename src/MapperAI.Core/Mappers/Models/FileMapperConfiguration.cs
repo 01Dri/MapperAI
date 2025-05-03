@@ -1,6 +1,4 @@
-﻿using MapperAI.Core.Helpers;
-
-namespace MapperAI.Core.Mappers.Models;
+﻿namespace MapperAI.Core.Mappers.Models;
 
 public class FileMapperConfiguration
 {

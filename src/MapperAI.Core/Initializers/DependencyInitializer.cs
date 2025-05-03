@@ -1,11 +1,23 @@
 ﻿using System.Reflection;
-using MapperAI.Core.Initializers.Interfaces;
 
 namespace MapperAI.Core.Initializers;
 
-public class DependencyInitializer : IDependencyInitializer
+public class DependencyInitializer
 {
-    public void InitializeDependencyProperties(Type? itemType, PropertyInfo property, object obj)
+    
+    public static void Initialize(object obj)
+    {
+        var properties = obj.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
+        var genericProperties = properties.Where(x => x.PropertyType.IsGenericType);
+        foreach (var property in genericProperties)
+        {
+            foreach (var itemType in property.PropertyType.GetGenericArguments())
+            {
+                InitializeDependencyProperties(itemType, property, obj);
+            }
+        }
+    }
+    private static void InitializeDependencyProperties(Type? itemType, PropertyInfo property, object obj)
     {
         if (itemType == null)
             throw new ArgumentNullException(nameof(itemType));
