@@ -8,21 +8,21 @@ namespace MapperAI.Core.Mappers;
 public class ClassMapper : IClassMapper
 {
     private readonly IMapperSerializer _serializer;
-    private readonly IClientFactoryAI _clientFactoryAi;
+    private readonly IMapperClientFactory _mapperClientFactory;
 
-    public ClassMapper(IMapperSerializer serializer, IClientFactoryAI clientFactoryAi)
+    public ClassMapper(IMapperSerializer serializer, IMapperClientFactory mapperClientFactory)
     {
         _serializer = serializer;
-        _clientFactoryAi = clientFactoryAi;
+        _mapperClientFactory = mapperClientFactory;
     }
 
 
     public async Task<TK?> MapAsync<T, TK>(T origin, MapperClientConfiguration configuration, CancellationToken cancellationToken = default) where T : class where TK : class, new()
     {
-        IClientAI client = _clientFactoryAi.CreateClient(configuration);
+        IMapperClient mapperClient = _mapperClientFactory.CreateClient(configuration);
         TK destinyObject = new TK();
         string prompt = CreatePrompt(_serializer.Serialize(origin), destinyObject);
-        var result = await client.SendAsync(prompt, cancellationToken);
+        var result = await mapperClient.SendAsync(prompt, cancellationToken);
         return _serializer.Deserialize<TK>(result.Value);
     }
 

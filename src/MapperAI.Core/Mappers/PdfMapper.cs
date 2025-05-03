@@ -11,18 +11,18 @@ namespace MapperAI.Core.Mappers;
 public class PdfMapper : IPDFMapper
 {
     private readonly IMapperSerializer _serializer;
-    private readonly IClientFactoryAI _clientFactoryAi;
+    private readonly IMapperClientFactory _mapperClientFactory;
 
-    public PdfMapper(IMapperSerializer serializer, IClientFactoryAI clientFactoryAi)
+    public PdfMapper(IMapperSerializer serializer, IMapperClientFactory mapperClientFactory)
     {
         _serializer = serializer;
-        _clientFactoryAi = clientFactoryAi;
+        _mapperClientFactory = mapperClientFactory;
     }
 
 
     public async Task<T?> MapAsync<T>(string pdfPath, MapperClientConfiguration configuration, CancellationToken cancellationToken = default) where T : class, new()
     {
-        IClientAI iai = _clientFactoryAi.CreateClient(configuration);
+        IMapperClient iai = _mapperClientFactory.CreateClient(configuration);
         string pdfContent = ExtractPdfContent(pdfPath);
         T destinyObject = new T();
         DependencyInitializer.Initialize(destinyObject);

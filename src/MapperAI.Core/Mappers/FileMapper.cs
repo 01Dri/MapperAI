@@ -10,22 +10,22 @@ namespace MapperAI.Core.Mappers;
 public class FileMapper : IFileMapper
 {
 
-    private readonly IClientFactoryAI _clientFactoryAi;
+    private readonly IMapperClientFactory _mapperClientFactory;
     private readonly IMapperSerializer _serializer;
 
-    public FileMapper(IClientFactoryAI clientFactoryAi, IMapperSerializer serializer)
+    public FileMapper(IMapperClientFactory mapperClientFactory, IMapperSerializer serializer)
     {
-        _clientFactoryAi = clientFactoryAi;
+        _mapperClientFactory = mapperClientFactory;
         _serializer = serializer;
     }
 
     public async Task MapAsync(FileMapperConfiguration configuration, MapperClientConfiguration mapperClientConfiguration,
         CancellationToken cancellationToken = default)
     {
-        IClientAI client = _clientFactoryAi.CreateClient(mapperClientConfiguration);
+        IMapperClient mapperClient = _mapperClientFactory.CreateClient(mapperClientConfiguration);
         List<MapperClassContent> filesToMap = GetFilesToMap(configuration);
         string prompt = CreatePrompt(filesToMap, configuration);
-        MapperClientResponse result = await client.SendAsync(prompt, cancellationToken);
+        MapperClientResponse result = await mapperClient.SendAsync(prompt, cancellationToken);
         List<MapperClassContent>? contents = _serializer.Deserialize<List<MapperClassContent>>(result.Value);
         if (contents != null && contents.Any())
         {

@@ -9,7 +9,7 @@ namespace MapperAI.Test;
 
 public class PdfMapperTests
 {
-    private readonly IPDFMapper _pdfMapper = new PdfMapper(new MapperSerializer(), new MapperClientFactory(new MapperSerializer()));
+    private readonly IPDFMapper _pdfMapper = new PdfMapper(new MapperSerializer(), new MapperMapperClientFactory(new MapperSerializer()));
     private readonly MapperClientConfiguration _mapperClientConfiguration = new ()
     {
         Type = ModelType.Gemini,

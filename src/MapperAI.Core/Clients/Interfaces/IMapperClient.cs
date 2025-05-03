@@ -2,7 +2,7 @@
 
 namespace MapperAI.Core.Clients.Interfaces;
 
-public interface IClientAI
+public interface IMapperClient
 {
     Task<MapperClientResponse> SendAsync(string prompt, CancellationToken cancellationToken);
 

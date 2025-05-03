@@ -9,7 +9,7 @@ namespace MapperAI.Test;
 
 public class ClassMapperTests
 {
-    private readonly IClassMapper _classClassMapper = new ClassMapper(new MapperSerializer(), new MapperClientFactory(new MapperSerializer()));
+    private readonly IClassMapper _classClassMapper = new ClassMapper(new MapperSerializer(), new MapperMapperClientFactory(new MapperSerializer()));
     private readonly MapperClientConfiguration _mapperClientConfiguration = new ()
     {
         Type = ModelType.Gemini,

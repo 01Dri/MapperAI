@@ -10,7 +10,7 @@ namespace MapperAI.Test;
 
 public class FileMapperTests
 {
-    private readonly FileMapper _mapper = new (new MapperClientFactory(new MapperSerializer()), new MapperSerializer());
+    private readonly FileMapper _mapper = new (new MapperMapperClientFactory(new MapperSerializer()), new MapperSerializer());
 
     private readonly MapperClientConfiguration _mapperClientConfiguration = new()
     {
