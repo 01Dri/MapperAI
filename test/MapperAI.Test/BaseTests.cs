@@ -13,6 +13,6 @@ public abstract class BaseTests
     public BaseTests()
     {
         Serializer = new MapperSerializer();
-        Factory = new MapperMapperClientFactory(Serializer);
+        Factory = new MapperClientFactory(Serializer);
     }
 }

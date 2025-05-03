@@ -5,11 +5,11 @@ using MapperAI.Core.Serializers.Interfaces;
 
 namespace MapperAI.Core.Clients;
 
-public class MapperMapperClientFactory : IMapperClientFactory
+public class MapperClientFactory : IMapperClientFactory
 {
     private readonly IMapperSerializer _serializer;
 
-    public MapperMapperClientFactory(IMapperSerializer serializer)
+    public MapperClientFactory(IMapperSerializer serializer)
     {
         _serializer = serializer;
     }
