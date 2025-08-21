@@ -12,9 +12,9 @@ namespace MapperAI.Core.DI;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddMapperAI(this IServiceCollection services, string apiKey, string model, ModelType modelType)
+    public static IServiceCollection AddMapperAI(this IServiceCollection services, string apiKey, ModelType modelType)
     {
-        services.AddMapperClientConfiguration(apiKey, model, modelType);
+        services.AddMapperClientConfiguration(apiKey, modelType);
         services.AddHttpClient();
         services.AddSingleton<IMapperSerializer, MapperSerializer>();
         services.AddSingleton<IMapperClientFactory, MapperClientFactory>();
@@ -27,9 +27,9 @@ public static class DependencyInjection
         return services;
     }
 
-    private static void AddMapperClientConfiguration(this IServiceCollection services, string apiKey, string model, ModelType modelType)
+    private static void AddMapperClientConfiguration(this IServiceCollection services, string apiKey, ModelType modelType)
     {
-        MapperClientConfiguration configuration = new(apiKey, model, modelType);
+        MapperClientConfiguration configuration = new(apiKey, modelType);
         services.AddSingleton<MapperClientConfiguration>(s => configuration);
 
     }

@@ -9,8 +9,6 @@ namespace MapperAI.Test;
 
 public class FileMapperTests : BaseTests
 {
-
-    private readonly MapperClientConfiguration _clientConfiguration;
     private readonly IFileMapper _mapper;
 
     private string InputFolder => Path.Combine(FoldersHelpers.GetProjectDefaultPath(), "Class");
@@ -18,8 +16,8 @@ public class FileMapperTests : BaseTests
 
     public FileMapperTests()
     {
-        _clientConfiguration = new MapperClientConfiguration("gemini-2.0-flash", "AIzaSyC1p4crm4Vh3Ew_qkYBWt7FxfGCpo1gJJA",ModelType.Gemini);
-        _mapper = new FileMapper(Factory, Serializer, _clientConfiguration);
+        var clientConfiguration = new MapperClientConfiguration( Environment.GetEnvironmentVariable("GEMINI_KEY"),ModelType.GeminiFlash2_0);
+        _mapper = new FileMapper(Factory, Serializer, clientConfiguration);
 
     }
 

@@ -2,7 +2,7 @@
 using iText.Kernel.Pdf.Canvas.Parser;
 using MapperAI.Core.Clients.Interfaces;
 using MapperAI.Core.Clients.Models;
-using MapperAI.Core.Initializers;
+using MapperAI.Core.Extensions.Initializers;
 using MapperAI.Core.Mappers.Interfaces;
 using MapperAI.Core.Serializers.Interfaces;
 
@@ -27,7 +27,7 @@ public class PdfMapper : IPDFMapper
         IMapperClient iai = _mapperClientFactory.CreateClient(_clientConfiguration);
         string pdfContent = ExtractPdfContent(pdfPath);
         T destinyObject = new T();
-        DependencyInitializer.Initialize(destinyObject);
+        destinyObject.Initialize();
         string prompt = CreatePrompt(pdfContent, _serializer.Serialize(destinyObject));
         MapperClientResponse result = await iai.SendAsync(prompt, cancellationToken);
         return _serializer.Deserialize<T>(result.Value);

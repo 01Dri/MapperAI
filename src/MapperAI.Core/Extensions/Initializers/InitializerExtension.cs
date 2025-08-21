@@ -1,11 +1,10 @@
-﻿using System.Reflection;
+using System.Reflection;
 
-namespace MapperAI.Core.Initializers;
+namespace MapperAI.Core.Extensions.Initializers;
 
-public class DependencyInitializer
+public static  class InitializerExtension
 {
-    
-    public static void Initialize(object obj)
+    public static void Initialize(this object obj)
     {
         var properties = obj.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance);
         var genericProperties = properties.Where(x => x.PropertyType.IsGenericType);
@@ -17,6 +16,7 @@ public class DependencyInitializer
             }
         }
     }
+    
     private static void InitializeDependencyProperties(Type? itemType, PropertyInfo property, object obj)
     {
         if (itemType == null)
@@ -47,5 +47,4 @@ public class DependencyInitializer
 
         property.SetValue(obj, listInstance);
     }
-
 }
