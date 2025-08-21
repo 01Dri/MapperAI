@@ -7,7 +7,7 @@
         <Title>MapperAI-Alpha</Title>
         <Authors>Dridev</Authors>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <Version>0.1.1-alpha</Version>
+        <Version>0.1.2-alpha</Version>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <RepositoryUrl>https://github.com/01Dri/MapperAI</RepositoryUrl>
         <RootNamespace>MapperAI.Core</RootNamespace>
@@ -15,6 +15,7 @@
 
     <ItemGroup>
       <PackageReference Include="itext7" Version="9.1.0" />
+      <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.8" />
     </ItemGroup>
 
 </Project>

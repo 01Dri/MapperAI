@@ -5,24 +5,17 @@ using MapperAI.Core.Serializers.Interfaces;
 
 namespace MapperAI.Core.Clients;
 
-public class MapperClientFactory : IMapperClientFactory
+public class MapperClientFactory(IMapperSerializer serializer, HttpClient httpClient) : IMapperClientFactory
 {
-    private readonly IMapperSerializer _serializer;
-
-    public MapperClientFactory(IMapperSerializer serializer)
-    {
-        _serializer = serializer;
-    }
-
     public IMapperClient CreateClient(MapperClientConfiguration configuration)
     {
         switch (configuration.Type)
         {
             case ModelType.Ollama:
-                return new OllamaMapperMapperClient(configuration, _serializer);
+                return new OllamaMapperClient(configuration, serializer, httpClient);
                        
             default:
-                return new GeminiMapperMapperClient(configuration, _serializer);
+                return new GeminiMapperClient(configuration, serializer, httpClient);
         }
     }
 }

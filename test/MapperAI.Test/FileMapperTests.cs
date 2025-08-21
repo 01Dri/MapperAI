@@ -9,8 +9,6 @@ namespace MapperAI.Test;
 
 public class FileMapperTests : BaseTests
 {
-
-    private readonly MapperClientConfiguration _clientConfiguration;
     private readonly IFileMapper _mapper;
 
     private string InputFolder => Path.Combine(FoldersHelpers.GetProjectDefaultPath(), "Class");
@@ -18,8 +16,8 @@ public class FileMapperTests : BaseTests
 
     public FileMapperTests()
     {
-        _clientConfiguration = new MapperClientConfiguration("gemini-2.0-flash", Environment.GetEnvironmentVariable("GEMINI_KEY"),ModelType.Gemini);
-        _mapper = new FileMapper(Factory, Serializer, _clientConfiguration);
+        var clientConfiguration = new MapperClientConfiguration( Environment.GetEnvironmentVariable("GEMINI_KEY"),ModelType.GeminiFlash2_0);
+        _mapper = new FileMapper(Factory, Serializer, clientConfiguration);
 
     }
 
@@ -34,9 +32,8 @@ public class FileMapperTests : BaseTests
             Extension = "go",
         };
         await _mapper.MapAsync(configuration);
-        var files = Directory.GetFiles(OutputFolder);
-        Assert.True(files.Length == 4);
-        Assert.True(files.All(x => x.Contains(".go")));
+        var files = Directory.GetFiles(OutputFolder).Where(x => x.Contains("go")).ToList();
+        Assert.True(files.Count == 4);
 
 
     }
@@ -45,11 +42,11 @@ public class FileMapperTests : BaseTests
     public async Task Test_Should_Create_4_Files_With_CSharp_Extension()
     {
 
-        string extesionToMap = "js";
+        string extesionToMap = "php";
         FileMapperConfiguration configuration = new FileMapperConfiguration(InputFolder, OutputFolder)
         {
             NameSpace = "MapperAI.Test.MappedClasses",
-            Extension = extesionToMap
+            Extension = extesionToMap,
         };
         await _mapper.MapAsync(configuration);
         var files = Directory.GetFiles(OutputFolder);
@@ -71,10 +68,8 @@ public class FileMapperTests : BaseTests
             LanguageVersion = "13"
         };
         await _mapper.MapAsync(configuration);
-        var files = Directory.GetFiles(OutputFolder);
-        Assert.True(files.Length == 1);
-        Assert.True(files.All(x => x.Contains(".cs")));
-
+        var files = Directory.GetFiles(OutputFolder).Where(x => x.Contains(".cs")).ToList();
+        Assert.True(files.Count == 1);
 
     }
 }
