@@ -8,6 +8,7 @@ public class MapperClientConfiguration
     public string? ApiKey { get; set; }
     public ModelType Type { get; set; }
 
+
     public MapperClientConfiguration(string model, string? apiKey, ModelType type)
     {
         Model = model;
@@ -20,4 +21,5 @@ public class MapperClientConfiguration
         Model = model;
         Type = type;
     }
+
 }

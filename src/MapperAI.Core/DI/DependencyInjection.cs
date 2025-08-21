@@ -1,5 +1,7 @@
 using MapperAI.Core.Clients;
 using MapperAI.Core.Clients.Interfaces;
+using MapperAI.Core.Clients.Models;
+using MapperAI.Core.Enums;
 using MapperAI.Core.Mappers;
 using MapperAI.Core.Mappers.Interfaces;
 using MapperAI.Core.Serializers;
@@ -10,8 +12,9 @@ namespace MapperAI.Core.DI;
 
 public static class DependencyInjection
 {
-    public static IServiceCollection AddMapperAI(this IServiceCollection services, string? apiKey)
+    public static IServiceCollection AddMapperAI(this IServiceCollection services, string apiKey, string model, ModelType modelType)
     {
+        services.AddMapperClientConfiguration(apiKey, model, modelType);
         services.AddHttpClient();
         services.AddSingleton<IMapperSerializer, MapperSerializer>();
         services.AddSingleton<IMapperClientFactory, MapperClientFactory>();
@@ -22,5 +25,12 @@ public static class DependencyInjection
         services.AddScoped<IPDFMapper, PdfMapper>();
         
         return services;
+    }
+
+    private static void AddMapperClientConfiguration(this IServiceCollection services, string apiKey, string model, ModelType modelType)
+    {
+        MapperClientConfiguration configuration = new(apiKey, model, modelType);
+        services.AddSingleton<MapperClientConfiguration>(s => configuration);
+
     }
 }
