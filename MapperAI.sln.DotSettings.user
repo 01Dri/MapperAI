@@ -17,5 +17,6 @@
     &lt;TestId&gt;xUnit::8B3E109D-96CA-4B6D-B379-6AF70646DC25::net8.0::MapperAI.Test.FileMapperTests.Test_Should_Create_4_Files_With_Go_Extension&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;xUnit::8B3E109D-96CA-4B6D-B379-6AF70646DC25::net8.0::MapperAI.Test.FileMapperTests.Test_Should_Create_4_Files_With_CSharp_Extension&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;xUnit::8B3E109D-96CA-4B6D-B379-6AF70646DC25::net8.0::MapperAI.Test.DI.DependencyInjectionTests.AddMapperAI_ShouldRegisterServices&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::8B3E109D-96CA-4B6D-B379-6AF70646DC25::net8.0::MapperAI.Test.FileMapperTests&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

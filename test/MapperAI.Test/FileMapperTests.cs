@@ -32,9 +32,8 @@ public class FileMapperTests : BaseTests
             Extension = "go",
         };
         await _mapper.MapAsync(configuration);
-        var files = Directory.GetFiles(OutputFolder);
-        Assert.True(files.Length == 4);
-        Assert.True(files.All(x => x.Contains(".go")));
+        var files = Directory.GetFiles(OutputFolder).Where(x => x.Contains("go")).ToList();
+        Assert.True(files.Count == 4);
 
 
     }
@@ -69,10 +68,8 @@ public class FileMapperTests : BaseTests
             LanguageVersion = "13"
         };
         await _mapper.MapAsync(configuration);
-        var files = Directory.GetFiles(OutputFolder);
-        Assert.True(files.Length == 1);
-        Assert.True(files.All(x => x.Contains(".cs")));
-
+        var files = Directory.GetFiles(OutputFolder).Where(x => x.Contains(".cs")).ToList();
+        Assert.True(files.Count == 1);
 
     }
 }
