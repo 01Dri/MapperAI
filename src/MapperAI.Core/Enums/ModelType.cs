@@ -1,9 +1,11 @@
-﻿namespace MapperAI.Core.Enums;
+﻿using System.ComponentModel;
+
+namespace MapperAI.Core.Enums;
 
 public enum ModelType
 {
-    
-    Gemini,
+    [Description("gemini-2.0-flash")]
+    GeminiFlash2_0,
     ChatGpt,
     Ollama
 }

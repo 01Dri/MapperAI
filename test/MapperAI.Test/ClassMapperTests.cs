@@ -8,12 +8,12 @@ namespace MapperAI.Test;
 public class ClassMapperTests : BaseTests
 {
     private readonly IClassMapper _classMapper;
-    private readonly MapperClientConfiguration _clientConfiguration;
 
     public ClassMapperTests()
     {
-        _clientConfiguration = new MapperClientConfiguration("gemini-2.0-flash", Environment.GetEnvironmentVariable("GEMINI_KEY"),ModelType.Gemini);
-        _classMapper = new ClassMapper(Serializer, Factory, _clientConfiguration);
+        var clientConfiguration = new MapperClientConfiguration(Environment.GetEnvironmentVariable("GEMINI_KEY"),ModelType.GeminiFlash2_0);
+        _classMapper = new ClassMapper(Serializer, Factory, clientConfiguration);
+        
     }
 
 

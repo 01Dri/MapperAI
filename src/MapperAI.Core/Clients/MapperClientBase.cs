@@ -12,11 +12,11 @@ public abstract class MapperClientBase
     private readonly HttpClient _httpClient;
     private readonly IMapperSerializer _serializer;
 
-    protected MapperClientBase(MapperClientConfiguration mapperClientConfiguration,  IMapperSerializer serializer)
+    protected MapperClientBase(MapperClientConfiguration mapperClientConfiguration,  IMapperSerializer serializer, HttpClient httpClient)
     {
         MapperClientConfiguration = mapperClientConfiguration;
-        _httpClient = new HttpClient();
         _serializer = serializer;
+        _httpClient = httpClient;
     }
 
     protected async Task<JsonDocument> GetAsync(string endpoint, object body, CancellationToken cancellationToken = default)
@@ -31,7 +31,7 @@ public abstract class MapperClientBase
                 throw new MapperRequestStatusException($"Request failed with status: {response.StatusCode}");
             }
 
-            string result = await response.Content.ReadAsStringAsync();
+            string result = await response.Content.ReadAsStringAsync(cancellationToken);
             return JsonDocument.Parse(result);
         } 
         catch (Exception ex)

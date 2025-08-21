@@ -11,10 +11,10 @@ public class OllamaMapperClient :  MapperClientBase ,IMapperClient
 {
     private const string Endpoint = "http://localhost:11434/api/generate";
 
-    public OllamaMapperClient(MapperClientConfiguration mapperClientConfiguration, IMapperSerializer serializer) : base(mapperClientConfiguration, serializer)
+
+    public OllamaMapperClient(MapperClientConfiguration mapperClientConfiguration, IMapperSerializer serializer, HttpClient httpClient) : base(mapperClientConfiguration, serializer, httpClient)
     {
     }
-
 
     public async Task<MapperClientResponse> SendAsync(string prompt, CancellationToken cancellationToken)
     {

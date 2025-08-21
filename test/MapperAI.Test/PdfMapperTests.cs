@@ -8,12 +8,11 @@ namespace MapperAI.Test;
 public class PdfMapperTests : BaseTests
 {
     private readonly IPDFMapper _pdfMapper;
-    private readonly MapperClientConfiguration _clientConfiguration;
 
     public PdfMapperTests()
     {
-        _clientConfiguration = new MapperClientConfiguration("gemini-2.0-flash", Environment.GetEnvironmentVariable("GEMINI_KEY"),ModelType.Gemini);
-        _pdfMapper = new PdfMapper(Serializer, Factory, _clientConfiguration);
+        var clientConfiguration = new MapperClientConfiguration( Environment.GetEnvironmentVariable("GEMINI_KEY"),ModelType.GeminiFlash2_0);
+        _pdfMapper = new PdfMapper(Serializer, Factory, clientConfiguration);
     }
 
     [Fact]
