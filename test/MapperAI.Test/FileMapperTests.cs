@@ -18,7 +18,7 @@ public class FileMapperTests : BaseTests
 
     public FileMapperTests()
     {
-        _clientConfiguration = new MapperClientConfiguration("gemini-2.0-flash", Environment.GetEnvironmentVariable("GEMINI_KEY"),ModelType.Gemini);
+        _clientConfiguration = new MapperClientConfiguration("gemini-2.0-flash", "AIzaSyC1p4crm4Vh3Ew_qkYBWt7FxfGCpo1gJJA",ModelType.Gemini);
         _mapper = new FileMapper(Factory, Serializer, _clientConfiguration);
 
     }
@@ -45,11 +45,11 @@ public class FileMapperTests : BaseTests
     public async Task Test_Should_Create_4_Files_With_CSharp_Extension()
     {
 
-        string extesionToMap = "js";
+        string extesionToMap = "php";
         FileMapperConfiguration configuration = new FileMapperConfiguration(InputFolder, OutputFolder)
         {
             NameSpace = "MapperAI.Test.MappedClasses",
-            Extension = extesionToMap
+            Extension = extesionToMap,
         };
         await _mapper.MapAsync(configuration);
         var files = Directory.GetFiles(OutputFolder);

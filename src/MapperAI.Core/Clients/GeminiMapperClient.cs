@@ -10,8 +10,8 @@ public class GeminiMapperClient : MapperClientBase, IMapperClient
 {
   private const string EndpointBase = "https://generativelanguage.googleapis.com/v1beta";
 
-  public GeminiMapperClient(MapperClientConfiguration mapperClientConfiguration, IMapperSerializer serializer) : base(
-    mapperClientConfiguration, serializer)
+
+  public GeminiMapperClient(MapperClientConfiguration mapperClientConfiguration, IMapperSerializer serializer, HttpClient httpClient) : base(mapperClientConfiguration, serializer, httpClient)
   {
   }
 
