@@ -19,10 +19,10 @@ public class MapperClientFactory : IMapperClientFactory
         switch (configuration.Type)
         {
             case ModelType.Ollama:
-                return new OllamaMapperMapperClient(configuration, _serializer);
+                return new OllamaMapperClient(configuration, _serializer);
                        
             default:
-                return new GeminiMapperMapperClient(configuration, _serializer);
+                return new GeminiMapperClient(configuration, _serializer);
         }
     }
 }
