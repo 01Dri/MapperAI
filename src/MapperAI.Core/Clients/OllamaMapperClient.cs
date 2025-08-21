@@ -7,11 +7,11 @@ using MapperAI.Core.Serializers.Interfaces;
 
 namespace MapperAI.Core.Clients;
 
-public class OllamaMapperMapperClient :  MapperClientBase ,IMapperClient
+public class OllamaMapperClient :  MapperClientBase ,IMapperClient
 {
     private const string Endpoint = "http://localhost:11434/api/generate";
 
-    public OllamaMapperMapperClient(MapperClientConfiguration mapperClientConfiguration, IMapperSerializer serializer) : base(mapperClientConfiguration, serializer)
+    public OllamaMapperClient(MapperClientConfiguration mapperClientConfiguration, IMapperSerializer serializer) : base(mapperClientConfiguration, serializer)
     {
     }
 
