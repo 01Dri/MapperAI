@@ -6,12 +6,12 @@ using MapperAI.Core.Serializers.Interfaces;
 
 namespace MapperAI.Core.Clients;
 
-public class GeminiMapperClient : MapperClientBase, IMapperClient
+internal class GeminiMapperClient : MapperClientBase, IMapperClient
 {
   private const string EndpointBase = "https://generativelanguage.googleapis.com/v1beta";
 
 
-  public GeminiMapperClient(MapperClientConfiguration mapperClientConfiguration, IMapperSerializer serializer, HttpClient httpClient) : base(mapperClientConfiguration, serializer, httpClient)
+  internal GeminiMapperClient(MapperClientConfiguration mapperClientConfiguration, IMapperSerializer serializer, HttpClient httpClient) : base(mapperClientConfiguration, serializer, httpClient)
   {
   }
 

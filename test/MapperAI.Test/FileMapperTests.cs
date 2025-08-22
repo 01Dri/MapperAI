@@ -31,6 +31,7 @@ public class FileMapperTests : BaseTests
             NameSpace = "MapperAI.Test.MappedClasses",
             Extension = "go",
         };
+        
         await _mapper.MapAsync(configuration);
         var files = Directory.GetFiles(OutputFolder).Where(x => x.Contains("go")).ToList();
         Assert.True(files.Count == 4);
