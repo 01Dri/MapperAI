@@ -13,27 +13,31 @@ public class PdfMapper : IPDFMapper
     private readonly IMapperSerializer _serializer;
     private readonly IMapperClientFactory _mapperClientFactory;
     private readonly MapperClientConfiguration _clientConfiguration;
+    private readonly HttpClient? _httpClient;
 
-    public PdfMapper(IMapperSerializer serializer, IMapperClientFactory mapperClientFactory, MapperClientConfiguration clientConfiguration)
+    public PdfMapper(IMapperSerializer serializer, IMapperClientFactory mapperClientFactory, MapperClientConfiguration clientConfiguration, HttpClient? httpClient = null)
     {
         _serializer = serializer;
         _mapperClientFactory = mapperClientFactory;
         _clientConfiguration = clientConfiguration;
+        _httpClient = httpClient;
     }
 
-
-    public async Task<T?> MapAsync<T>(string pdfPath, CancellationToken cancellationToken = default) where T : class, new()
+    public async Task<T?> MapAsync<T>(string pdfPath,  CancellationToken cancellationToken = default) where T : class, new()
     {
-        IMapperClient iai = _mapperClientFactory.CreateClient(_clientConfiguration);
-        string pdfContent = ExtractPdfContent(pdfPath);
-        T destinyObject = new T();
+        var isWeb = IsWebLink(pdfPath);
+        if (isWeb && _httpClient == null) throw new ArgumentException("HttpClient instance is required");
+        var iai = _mapperClientFactory.CreateClient(_clientConfiguration);
+        var pdfContent = isWeb ? await ExtractPdfWebContent(pdfPath) : SerializePdfContent(new PdfReader(pdfPath));
+        var destinyObject = new T();
         destinyObject.Initialize();
-        string prompt = CreatePrompt(pdfContent, _serializer.Serialize(destinyObject));
-        MapperClientResponse result = await iai.SendAsync(prompt, cancellationToken);
+        var prompt = CreatePrompt(pdfContent, _serializer.Serialize(destinyObject));
+        var result = await iai.SendAsync(prompt, cancellationToken);
         return _serializer.Deserialize<T>(result.Value);
     }
+    
 
-    private string CreatePrompt(string pdfContent, string classStructure)
+    private static string CreatePrompt(string pdfContent, string classStructure)
     {
         return $"""
                 You are a senior software engineer specializing in data extraction and mapping.
@@ -54,32 +58,59 @@ public class PdfMapper : IPDFMapper
     }
 
 
-    private string ExtractPdfContent(string pdfPath)
+    private async Task<string> ExtractPdfWebContent(string pdfUri)
     {
-        var pdfReader = new PdfReader(pdfPath);
-        var pdfDoc = new PdfDocument(pdfReader);
+        if (pdfUri.StartsWith("https://drive.google.com") && !pdfUri.Contains("uc?export=download"))
+            pdfUri = ParseDriveUrl(pdfUri);
+        
+        var requestResult = await _httpClient!.GetAsync(pdfUri);
+        requestResult.EnsureSuccessStatusCode();
+        var content = requestResult.Content;
+        var stream = await content.ReadAsStreamAsync();
+        var pdfReader = new PdfReader(stream);
+        return SerializePdfContent(pdfReader);
+    }
+
+    private string SerializePdfContent(PdfReader reader)
+    {
+        var pdfDoc = new PdfDocument(reader);
         var extractedData = new List<string>();
-    
+
         for (int i = 1; i <= pdfDoc.GetNumberOfPages(); i++)
         {
             var page = pdfDoc.GetPage(i);
-            string text = PdfTextExtractor.GetTextFromPage(page);
-            string cleanedText = CleanText(text);
-    
+            var text = PdfTextExtractor.GetTextFromPage(page);
+            var cleanedText = CleanText(text);
+
             extractedData.Add(cleanedText);
         }
-
         return _serializer.Serialize(extractedData);
-
     }
-    
-    private string CleanText(string input)
+
+    private static string ParseDriveUrl(string pdfUri)
     {
-        return string.Join(" ", input.Split(new[] { '\n', '\r' },
+        var uri = new Uri(pdfUri);
+
+        var segments = uri.Segments;
+        string? fileId = null;
+
+        for (var i = 0; i < segments.Length; i++)
+        {
+            if (segments[i] != "d/" || i + 1 >= segments.Length) continue;
+            fileId = segments[i + 1].TrimEnd('/');
+            break;
+        }
+        if (string.IsNullOrEmpty(fileId)) throw new ArgumentException("Invalid drive link");
+        return  $"https://drive.google.com/uc?export=download&id={fileId}";
+    }
+    private static string CleanText(string input)
+    {
+        return string.Join(" ", input.Split(['\n', '\r'],
                 StringSplitOptions.RemoveEmptyEntries))
             .Replace("\\n", " ")
             .Replace("\\r", " ")
             .Trim();
     }
-        
+
+    private static bool IsWebLink(string pdfPath) => pdfPath.StartsWith("https://") || pdfPath.StartsWith("http://");
 }

@@ -6,7 +6,7 @@ using MapperAI.Core.Serializers.Interfaces;
 
 namespace MapperAI.Core.Clients;
 
-public abstract class MapperClientBase
+internal abstract class MapperClientBase
 {
     protected MapperClientConfiguration MapperClientConfiguration;
     private readonly HttpClient _httpClient;

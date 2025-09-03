@@ -2,7 +2,8 @@
 
 public interface IPDFMapper
 {
-    Task<T?> MapAsync<T>(string pdfPath,  CancellationToken cancellationToken = default) 
+    Task<T?> MapAsync<T>(string pdfPath, CancellationToken cancellationToken = default)
         where T : class, new();
+
 
 }

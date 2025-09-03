@@ -3,9 +3,9 @@ using System.Reflection;
 
 namespace MapperAI.Core.Extensions.Enums;
 
-public static class EnumExtension
+internal static class EnumExtension
 {
-    public static string GetEnumDescriptionValue(this Enum data)
+    internal static string GetEnumDescriptionValue(this Enum data)
     {
         FieldInfo? field = data.GetType().GetField(data.ToString());
         var attribute = field?.GetCustomAttribute<DescriptionAttribute>();

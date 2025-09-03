@@ -2,7 +2,7 @@ using System.Reflection;
 
 namespace MapperAI.Core.Extensions.Initializers;
 
-public static  class InitializerExtension
+internal static  class InitializerExtension
 {
     public static void Initialize(this object obj)
     {
