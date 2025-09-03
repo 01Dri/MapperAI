@@ -11,7 +11,7 @@ public class PdfMapperIntegrationTests : BaseTests
 
     public PdfMapperIntegrationTests()
     {
-        var clientConfiguration = new MapperClientConfiguration("AIzaSyCiJxEdi-yzBg5GPsPhh6etWEKXzZATXtU", ModelType.GeminiFlash2_0);
+        var clientConfiguration = new MapperClientConfiguration(Environment.GetEnvironmentVariable("GEMINI_KEY"), ModelType.GeminiFlash2_0);
         _pdfMapper = new PdfMapper(Serializer, Factory, clientConfiguration, new HttpClient());
     }
 
