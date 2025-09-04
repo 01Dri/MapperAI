@@ -42,6 +42,7 @@ public class MapperClientFactory(IMapperSerializer serializer, HttpClient httpCl
         }
     }
 
+    // Duplicated code, fix this soon... 
     private IFilterHandler SetNextHandlers(IFilterHandler firstHandler, IFilterHandler? lastHandler)
     {
         if (firstHandler == null) throw new ArgumentException("First instance of handler is required");
