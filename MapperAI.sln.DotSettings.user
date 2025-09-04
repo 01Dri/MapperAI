@@ -10,13 +10,14 @@
     &lt;TestId&gt;xUnit::8B3E109D-96CA-4B6D-B379-6AF70646DC25::net8.0::MapperAI.Test.PdfMapperTests.TestWeb&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=7b48511d_002D7b52_002D4ba3_002D89c2_002D2edf68a1cfe5/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="TestWeb2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=7b48511d_002D7b52_002D4ba3_002D89c2_002D2edf68a1cfe5/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="TestWeb2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;
     &lt;TestId&gt;xUnit::8B3E109D-96CA-4B6D-B379-6AF70646DC25::net8.0::MapperAI.Test.PdfMapperIntegrationTests&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;xUnit::8B3E109D-96CA-4B6D-B379-6AF70646DC25::net8.0::MapperAI.Test.DI.DependencyInjectionTests.AddMapperAI_ShouldRegisterServices&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::8B3E109D-96CA-4B6D-B379-6AF70646DC25::net8.0::MapperAI.Test.ClassMapperTests.TestGenericClient&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=ee3fe810_002Dfb62_002D402b_002Db9c5_002D8dab803c815e/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="Test1" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=ee3fe810_002Dfb62_002D402b_002Db9c5_002D8dab803c815e/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="Test1" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;
     &lt;TestId&gt;xUnit::8B3E109D-96CA-4B6D-B379-6AF70646DC25::net8.0::MapperAI.Test.ClassMapperTests.Test1&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;xUnit::8B3E109D-96CA-4B6D-B379-6AF70646DC25::net8.0::MapperAI.Test.FileMapperTests.Test1&lt;/TestId&gt;&#xD;
@@ -28,5 +29,6 @@
     &lt;TestId&gt;xUnit::8B3E109D-96CA-4B6D-B379-6AF70646DC25::net8.0::MapperAI.Test.FileMapperTests&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;xUnit::8B3E109D-96CA-4B6D-B379-6AF70646DC25::net8.0::MapperAI.Test.PdfMapperTests.TestWeb&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;xUnit::8B3E109D-96CA-4B6D-B379-6AF70646DC25::net8.0::MapperAI.Test.PdfMapperTests.TestWeb2&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::8B3E109D-96CA-4B6D-B379-6AF70646DC25::net8.0::MapperAI.Test.ClassMapperTests.TestGenericClient&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
