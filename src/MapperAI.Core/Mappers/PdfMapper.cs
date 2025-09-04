@@ -28,7 +28,7 @@ public class PdfMapper : IPDFMapper
         var isWeb = IsWebLink(pdfPath);
         if (isWeb && _httpClient == null) throw new ArgumentException("HttpClient instance is required");
         var iai = _mapperClientFactory.CreateClient(_clientConfiguration);
-        var pdfContent = isWeb ? await ExtractPdfWebContent(pdfPath) : SerializePdfContent(new PdfReader(pdfPath));
+        var pdfContent = isWeb ? await ExtractPdfWebContentAsync(pdfPath) : SerializePdfContent(new PdfReader(pdfPath));
         var destinyObject = new T();
         destinyObject.Initialize();
         var prompt = CreatePrompt(pdfContent, _serializer.Serialize(destinyObject));
@@ -58,7 +58,7 @@ public class PdfMapper : IPDFMapper
     }
 
 
-    private async Task<string> ExtractPdfWebContent(string pdfUri)
+    private async Task<string> ExtractPdfWebContentAsync(string pdfUri)
     {
         if (pdfUri.StartsWith("https://drive.google.com") && !pdfUri.Contains("uc?export=download"))
             pdfUri = ParseDriveUrl(pdfUri);
