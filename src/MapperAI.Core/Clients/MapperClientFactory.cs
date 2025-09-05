@@ -22,11 +22,11 @@ public class MapperClientFactory(IMapperSerializer serializer, HttpClient httpCl
         var firstFilterHandler = filterHandlersQueue.Dequeue();
         var firstPayloadHandler = payloadHandlersQueue.Dequeue();
         
-        var filterHandler = SetNextHandlers(firstFilterHandler, null, filterHandlersQueue);
-        var payloadHandler = SetNextHandlers(firstPayloadHandler, null, payloadHandlersQueue);
+        firstFilterHandler = SetNextHandlers(firstFilterHandler, null, filterHandlersQueue);
+        firstPayloadHandler = SetNextHandlers(firstPayloadHandler, null, payloadHandlersQueue);
 
         configuration.Endpoint = GetEndpoint(configuration);
-        return new GenericMapperClient(configuration, serializer, httpClient, filterHandler, payloadHandler);
+        return new GenericMapperClient(configuration, serializer, httpClient, firstFilterHandler, firstPayloadHandler);
     }
 
     private static string GetEndpoint(MapperClientConfiguration configuration)
