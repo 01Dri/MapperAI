@@ -5,7 +5,7 @@ namespace MapperAI.Core.Chains.Payloads;
 
 public class GeminiPayload : IPayloadHandler
 {
-    private IHandler<IPayloadHandler>? _next;
+    private IPayloadHandler? _next;
 
     public object? CreatePayload(string prompt, ModelType model)
     {
@@ -13,10 +13,9 @@ public class GeminiPayload : IPayloadHandler
         {
             if (_next == null)
             {
-                throw new ArgumentException("Error");
+                throw new ArgumentException("Cannot proceed: the next handler in the chain is null.");
             }
-            var nextCasted =  (IPayloadHandler)_next;
-            return nextCasted.CreatePayload(prompt, model);
+            return _next.CreatePayload(prompt, model);
         }
         
         return new
@@ -34,8 +33,8 @@ public class GeminiPayload : IPayloadHandler
         };
     }
 
-    public void SetNext(IHandler<IPayloadHandler> next)
+    public void SetNext(object next)
     {
-        _next = next;
+        _next = (IPayloadHandler)next;
     }
 }

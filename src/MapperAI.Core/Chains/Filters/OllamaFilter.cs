@@ -7,11 +7,11 @@ namespace MapperAI.Core.Chains.Filters;
 public class OllamaFilter : IFilterHandler
 {
     
-    private IHandler<IFilterHandler>? _next;
+    private IFilterHandler? _next;
     
-    public void SetNext(IHandler<IFilterHandler> next)
+    public void SetNext(object next)
     {
-        _next = next;
+        _next = (IFilterHandler)next;
     }
 
     public string? Filter(object obj, ModelType model)
@@ -20,10 +20,9 @@ public class OllamaFilter : IFilterHandler
         {
             if (_next == null)
             {
-                throw new ArgumentException("Error");
+                throw new ArgumentException("Cannot proceed: the next handler in the chain is null.");
             }
-            var nextCasted =  (IFilterHandler)_next;
-            return nextCasted.Filter(obj, model);
+            return _next.Filter(obj, model);
         }
         var objString = (string)obj;
         if (string.IsNullOrWhiteSpace(objString)) return string.Empty;
