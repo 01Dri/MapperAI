@@ -15,7 +15,7 @@ public class DependencyInjectionTests
         var services = new ServiceCollection();
 
         // Act
-        services.AddMapperAI("fake-key",  ModelType.GeminiFlash2_0);
+        services.AddMapperAI("fake-key",  ModelType.Gemini);
         var provider = services.BuildServiceProvider();
 
         // Assert

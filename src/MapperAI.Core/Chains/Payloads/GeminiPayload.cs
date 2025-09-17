@@ -9,7 +9,7 @@ public class GeminiPayload : IPayloadHandler
 
     public object? CreatePayload(string prompt, ModelType model)
     {
-        if (model != ModelType.GeminiFlash2_0)
+        if (model != ModelType.Gemini)
         {
             if (_next == null)
             {

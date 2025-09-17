@@ -16,7 +16,7 @@ public class GeminiFilter : IFilterHandler
     }
     public string? Filter(object obj, ModelType model)
     {
-        if (model != ModelType.GeminiFlash2_0)
+        if (model != ModelType.Gemini)
         {
             if (_next == null)
             {

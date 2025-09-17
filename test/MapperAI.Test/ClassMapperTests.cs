@@ -11,7 +11,7 @@ public class ClassMapperTests : BaseTests
 
     public ClassMapperTests()
     {
-        var clientConfiguration = new MapperClientConfiguration(Environment.GetEnvironmentVariable("GEMINI_KEY"),ModelType.GeminiFlash2_0);
+        var clientConfiguration = new MapperClientConfiguration(Environment.GetEnvironmentVariable("GEMINI_KEY"),ModelType.Gemini, "gemini-2.0-flash");
         _classMapper = new ClassMapper(Serializer, Factory, clientConfiguration);
         
     }

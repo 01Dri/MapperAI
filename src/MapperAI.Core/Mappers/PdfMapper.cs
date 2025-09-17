@@ -27,12 +27,12 @@ public class PdfMapper : IPDFMapper
     {
         var isWeb = IsWebLink(pdfPath);
         if (isWeb && _httpClient == null) throw new ArgumentException("HttpClient instance is required");
-        var iai = _mapperClientFactory.CreateClient(_clientConfiguration);
+        var mapperClient = _mapperClientFactory.CreateClient(_clientConfiguration);
         var pdfContent = isWeb ? await ExtractPdfWebContentAsync(pdfPath) : SerializePdfContent(new PdfReader(pdfPath));
         var destinyObject = new T();
         destinyObject.Initialize();
         var prompt = CreatePrompt(pdfContent, _serializer.Serialize(destinyObject));
-        var result = await iai.SendAsync(prompt, cancellationToken);
+        var result = await mapperClient.SendAsync(prompt, cancellationToken);
         return _serializer.Deserialize<T>(result.Value);
     }
     

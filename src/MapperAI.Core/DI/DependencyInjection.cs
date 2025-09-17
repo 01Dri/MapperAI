@@ -29,7 +29,7 @@ public static class DependencyInjection
 
     private static void AddMapperClientConfiguration(this IServiceCollection services, string apiKey, ModelType modelType)
     {
-        MapperClientConfiguration configuration = new(apiKey, modelType);
+        MapperClientConfiguration configuration = new(apiKey, modelType, "");
         services.AddSingleton<MapperClientConfiguration>(s => configuration);
 
     }

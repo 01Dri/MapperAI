@@ -21,10 +21,10 @@ internal class GenericMapperClient : MapperClientBase, IMapperClient
 
     public async Task<MapperClientResponse> SendAsync(string prompt, CancellationToken cancellationToken)
     {
-        dynamic? payload = _payloadHandler.CreatePayload(prompt, MapperClientConfiguration.Type);
+        dynamic? payload = _payloadHandler.CreatePayload(prompt, MapperClientConfiguration.ModelType);
         if (payload == null) throw new MapperException("");
         using JsonDocument result = await GetAsync(MapperClientConfiguration.Endpoint, payload, cancellationToken);
-        string? resultParsed = _filterHandler.Filter(result, MapperClientConfiguration.Type);
+        string? resultParsed = _filterHandler.Filter(result, MapperClientConfiguration.ModelType);
         if (resultParsed == null) throw new MapperException("Result request from AI is null.");
         string cleanedResult = resultParsed
             .Replace("```json", string.Empty)

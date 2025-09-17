@@ -7,13 +7,14 @@ public class MapperClientConfiguration
 {
     public string Endpoint { get; set; }
     public string? ApiKey { get; set; }
-    public ModelType Type { get; set; }
-    public string Model => Type.GetEnumDescriptionValue();
+    public ModelType ModelType { get; set; }
+    public string ModelVersion { get; set; }
     
-    public MapperClientConfiguration( string? apiKey, ModelType type)
+
+    public MapperClientConfiguration(string? apiKey, ModelType modelType, string modelVersion)
     {
         ApiKey = apiKey;
-        Type = type;
+        ModelType = modelType;
+        ModelVersion = modelVersion;
     }
-
 }

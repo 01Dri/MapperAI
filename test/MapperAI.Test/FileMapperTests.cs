@@ -16,7 +16,7 @@ public class FileMapperTests : BaseTests
 
     public FileMapperTests()
     {
-        var clientConfiguration = new MapperClientConfiguration( Environment.GetEnvironmentVariable("GEMINI_KEY"),ModelType.GeminiFlash2_0);
+        var clientConfiguration = new MapperClientConfiguration( Environment.GetEnvironmentVariable("GEMINI_KEY"),ModelType.Gemini, "gemini-2.0-flash");
         _mapper = new FileMapper(Factory, Serializer, clientConfiguration);
 
     }

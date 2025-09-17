@@ -31,10 +31,10 @@ public class MapperClientFactory(IMapperSerializer serializer, HttpClient httpCl
 
     private static string GetEndpoint(MapperClientConfiguration configuration)
     {
-        return configuration.Type switch
+        return configuration.ModelType switch
         {
-            ModelType.GeminiFlash2_0 =>
-                $"https://generativelanguage.googleapis.com/v1beta/models/{configuration.Model}:generateContent?key={configuration.ApiKey}",
+            ModelType.Gemini =>
+                $"https://generativelanguage.googleapis.com/v1beta/models/{configuration.ModelVersion}:generateContent?key={configuration.ApiKey}",
             ModelType.Ollama => "http://localhost:11434/api/generate",
             _ => ""
         };
