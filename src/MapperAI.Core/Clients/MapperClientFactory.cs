@@ -11,20 +11,15 @@ namespace MapperAI.Core.Clients;
 
 public class MapperClientFactory(IMapperSerializer serializer, HttpClient httpClient) : IMapperClientFactory
 {
-    private readonly List<IFilterHandler> _filterPrototypes = [ new GeminiFilter(), new OllamaFilter() ];
-    private readonly List<IPayloadHandler> _payloadPrototypes = [ new GeminiPayload(), new OllamaPayload() ];
+    private readonly Queue<IFilterHandler> _queueFiltersHandlers = new([new GeminiFilter(), new OllamaFilter()]);
+    private readonly Queue<IPayloadHandler> _queuePayloadHandlers = new([new GeminiPayload(), new OllamaPayload()]);
 
     public IMapperClient CreateClient(MapperClientConfiguration configuration)
     {
-        var filterHandlersQueue = new Queue<IFilterHandler>(_filterPrototypes);
-        var payloadHandlersQueue = new Queue<IPayloadHandler>(_payloadPrototypes);
-
-        var firstFilterHandler = filterHandlersQueue.Dequeue();
-        var firstPayloadHandler = payloadHandlersQueue.Dequeue();
-        
-        firstFilterHandler = SetNextHandlers(firstFilterHandler, null, filterHandlersQueue);
-        firstPayloadHandler = SetNextHandlers(firstPayloadHandler, null, payloadHandlersQueue);
-
+        var firstFilterHandler = _queueFiltersHandlers.Dequeue();
+        var firstPayloadHandler = _queuePayloadHandlers.Dequeue();
+        firstFilterHandler = SetNextHandlers(firstFilterHandler, null, _queueFiltersHandlers);
+        firstPayloadHandler = SetNextHandlers(firstPayloadHandler, null, _queuePayloadHandlers);
         configuration.Endpoint = GetEndpoint(configuration);
         return new GenericMapperClient(configuration, serializer, httpClient, firstFilterHandler, firstPayloadHandler);
     }
