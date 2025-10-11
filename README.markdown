@@ -41,15 +41,6 @@ dotnet add package MapperAI.Core
 
 **MapperAI** is under active development, with new features and improvements being planned to enhance user experience and mapping efficiency.
 
-## Technologies Used
-
-MapperAI is built with the following technologies:
-
-- **C#**: The primary programming language for the project's logic.
-- **JsonSerializer**: For serializing and deserializing data in JSON format, facilitating communication between the application and AI.
-- **iText 7**: A powerful library for manipulating PDF files, used to extract text and information from documents.
-- **Gemini AI**: Integrated AI for data mapping and extraction (requires an API key).
-- **Ollama**: Optional local AI model support for running AI tasks without external API dependencies.
 
 ## AI Integration
 
