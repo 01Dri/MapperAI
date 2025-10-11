@@ -1,6 +1,5 @@
 using MapperAI.Core.Chains.Interfaces;
 using MapperAI.Core.Enums;
-using MapperAI.Core.Extensions.Enums;
 
 namespace MapperAI.Core.Chains.Payloads;
 
@@ -25,7 +24,7 @@ public class OllamaPayload  : IPayloadHandler
         
         return new
         {
-            model = model.GetEnumDescriptionValue(),
+            model = "ollama",
             prompt,
             stream = false
         }; 

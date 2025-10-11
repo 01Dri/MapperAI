@@ -1,5 +1,4 @@
 using MapperAI.Core.Enums;
-using MapperAI.Core.Extensions.Enums;
 
 namespace MapperAI.Core.Clients.Models;
 

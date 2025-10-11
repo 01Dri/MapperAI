@@ -9,7 +9,7 @@ public static class MapperConfigurationMock
     {
         return modelType switch
         {
-            ModelType.Gemini => new MapperClientConfiguration("AIzaSyBLAaanOL0HOcCJ7XuFnC2Edcpd4-41R84", modelType, "gemini-2.0-flash"),
+            ModelType.Gemini => new MapperClientConfiguration(Environment.GetEnvironmentVariable("GEMINI_KEY"), modelType, "gemini-2.0-flash"),
             ModelType.ChatGpt => new MapperClientConfiguration(Environment.GetEnvironmentVariable("CHATGPT_KEY"), modelType, "gpt-4"),
             ModelType.Ollama => new MapperClientConfiguration(null, modelType, "ollama"),
             _ => throw new ArgumentOutOfRangeException(nameof(modelType), modelType, null)
