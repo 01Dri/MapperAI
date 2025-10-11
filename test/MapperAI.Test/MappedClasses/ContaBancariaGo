@@ -1,0 +1,39 @@
+package MapperAI.Test.MappedClasses
+
+import "fmt"
+
+type ContaBancaria struct {
+	Numero  string
+	Titular string
+	Saldo   float64
+}
+
+func NewContaBancaria(numero string, titular string, saldo float64) *ContaBancaria {
+	return &ContaBancaria{
+		Numero:  numero,
+		Titular: titular,
+		Saldo:   saldo,
+	}
+}
+
+func (c *ContaBancaria) Depositar(valor float64) string {
+	if valor > 0 {
+		c.Saldo += valor
+		return fmt.Sprintf("Depósito de R$%.2f realizado com sucesso. Novo saldo: R$%.2f.", valor, c.Saldo)
+	} else {
+		return "Valor de depósito inválido."
+	}
+}
+
+func (c *ContaBancaria) Sacar(valor float64) string {
+	if valor > 0 && valor <= c.Saldo {
+		c.Saldo -= valor
+		return fmt.Sprintf("Saque de R$%.2f realizado com sucesso. Saldo restante: R$%.2f.", valor, c.Saldo)
+	} else {
+		return "Saldo insuficiente ou valor de saque inválido."
+	}
+}
+
+func (c *ContaBancaria) ConsultarSaldo() string {
+	return fmt.Sprintf("Saldo atual: R$%.2f.", c.Saldo)
+}

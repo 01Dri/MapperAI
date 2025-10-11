@@ -14,7 +14,7 @@ public class OllamaPayload  : IPayloadHandler
     }
     public object? CreatePayload(string prompt, ModelType model)
     {
-        if (model != ModelType.Gemini)
+        if (model != ModelType.Ollama)
         {
             if (_next == null)
             {
