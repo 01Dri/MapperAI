@@ -1,19 +1,16 @@
 package MapperAI.Test.MappedClasses
 
-import "fmt"
-
 type Usuario struct {
 	Username string
 	Email    string
 	Password string
 }
 
-// Constructor
-func NewUsuario(user string, mail string, pass string) *Usuario {
+func NewUsuario(username string, email string, password string) *Usuario {
 	return &Usuario{
-		Username: user,
-		Email:    mail,
-		Password: pass,
+		Username: username,
+		Email:    email,
+		Password: password,
 	}
 }
 
@@ -21,26 +18,26 @@ func (u *Usuario) GetUsername() string {
 	return u.Username
 }
 
-func (u *Usuario) SetUsername(user string) {
-	u.Username = user
+func (u *Usuario) SetUsername(username string) {
+	u.Username = username
 }
 
 func (u *Usuario) GetEmail() string {
 	return u.Email
 }
 
-func (u *Usuario) SetEmail(mail string) {
-	u.Email = mail
+func (u *Usuario) SetEmail(email string) {
+	u.Email = email
 }
 
 func (u *Usuario) GetPassword() string {
 	return u.Password
 }
 
-func (u *Usuario) SetPassword(pass string) {
-	u.Password = pass
+func (u *Usuario) SetPassword(password string) {
+	u.Password = password
 }
 
-func (u *Usuario) DisplayInfo() {
-	fmt.Printf("Username: %s, Email: %s\n", u.Username, u.Email)
+func (u *Usuario) DisplayInfo() string {
+	return "Username: " + u.Username + ", Email: " + u.Email
 }

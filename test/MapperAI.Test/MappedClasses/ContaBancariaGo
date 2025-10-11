@@ -19,9 +19,9 @@ func NewContaBancaria(numero string, titular string, saldo float64) *ContaBancar
 func (c *ContaBancaria) Depositar(valor float64) string {
 	if valor > 0 {
 		c.Saldo += valor
-		return fmt.Sprintf("Depósito de R$%.2f realizado com sucesso. Novo saldo: R$%.2f.", valor, c.Saldo)
+		return fmt.Sprintf("Dep\u00f3sito de R$%.2f realizado com sucesso. Novo saldo: R$%.2f.", valor, c.Saldo)
 	} else {
-		return "Valor de depósito inválido."
+		return "Valor de dep\u00f3sito inv\u00e1lido."
 	}
 }
 
@@ -30,7 +30,7 @@ func (c *ContaBancaria) Sacar(valor float64) string {
 		c.Saldo -= valor
 		return fmt.Sprintf("Saque de R$%.2f realizado com sucesso. Saldo restante: R$%.2f.", valor, c.Saldo)
 	} else {
-		return "Saldo insuficiente ou valor de saque inválido."
+		return "Saldo insuficiente ou valor de saque inv\u00e1lido."
 	}
 }
 

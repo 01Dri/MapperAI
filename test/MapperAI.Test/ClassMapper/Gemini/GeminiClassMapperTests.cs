@@ -1,6 +1,5 @@
 
 using MapperAI.Core.Enums;
-using MapperAI.Core.Mappers;
 using MapperAI.Core.Mappers.Interfaces;
 using MapperAI.Test.Utils.Mocks;
 
