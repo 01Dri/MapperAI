@@ -5,6 +5,7 @@
   &lt;TestAncestor&gt;&#xD;
     &lt;TestId&gt;xUnit::8B3E109D-96CA-4B6D-B379-6AF70646DC25::net8.0::MapperAI.Test.FileMapper.Gemini.GeminiFileMapperTests&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;xUnit::8B3E109D-96CA-4B6D-B379-6AF70646DC25::net8.0::MapperAI.Test.ClassMapper.Gemini.GeminiClassMapperTests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::8B3E109D-96CA-4B6D-B379-6AF70646DC25::net8.0::MapperAI.Test.PdfMapper.Gemini.GeminiPdfMapperTests&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	

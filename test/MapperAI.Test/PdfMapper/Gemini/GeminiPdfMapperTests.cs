@@ -58,7 +58,7 @@ public class GeminiPdfMapperTests : Utils.BaseTests
     public async Task Should_Map_Curriculum_From_LocalFile_With_Mock()
     {
         // Arrange
-        var pdfPath = Path.Combine(FoldersHelpers.GetProjectDefaultPath(), "test", "MapperAI.Test", "Utils", "Curriculo - Diego.pdf");
+        var pdfPath = Path.Combine(FoldersHelpers.GetProjectDefaultPath(), "Utils", "Curriculo - Diego.pdf");
         var expectedModel = new CurriculumModel
         {
             Curso = "Ciencia da computacao",
