@@ -2,8 +2,9 @@ using MapperAI.Core.Clients;
 using MapperAI.Core.Clients.Interfaces;
 using MapperAI.Core.Serializers;
 using MapperAI.Core.Serializers.Interfaces;
+using DotNetEnv;
 
-namespace MapperAI.Test;
+namespace MapperAI.Test.Utils;
 
 public abstract class BaseTests
 {
@@ -12,6 +13,7 @@ public abstract class BaseTests
 
     public BaseTests()
     {
+        Env.Load();
         Serializer = new MapperSerializer();
         Factory = new MapperClientFactory(Serializer, new HttpClient());
     }
