@@ -2,7 +2,6 @@
 using MapperAI.Core.Chains.Interfaces;
 using MapperAI.Core.Chains.Payloads;
 using MapperAI.Core.Enums;
-using MapperAI.Core.Extensions.Utils;
 
 namespace MapperAI.Core.Chains
 {
@@ -12,51 +11,42 @@ namespace MapperAI.Core.Chains
         {
             return new Dictionary<HandlerType, IHandler>
             {
-                { HandlerType.Filter, GetConfiguredHandlers(GetFilters()) },
-                { HandlerType.Payload, GetConfiguredHandlers(GetPayloads()) }
+                { HandlerType.Filter, BuildChain(GetFilters()) },
+                { HandlerType.Payload, BuildChain(GetPayloads()) }
             };
         }
 
-        private static T GetConfiguredHandlers<T>(Queue<T> handlers)
+        private static T BuildChain<T>(IEnumerable<T> handlers)
             where T : class, IHandler
         {
-            var firstHandler = handlers.Dequeue();
-            if (handlers.Count > 0)
+            var handlerList = handlers.ToList();
+            if (handlerList.Count == 0)
+                throw new InvalidOperationException("No handlers provided to build the chain.");
+
+            for (int i = 0; i < handlerList.Count - 1; i++)
             {
-                return BuildHandlers(firstHandler, null, handlers);
+                handlerList[i].SetNext(handlerList[i + 1]);
             }
-            return firstHandler;
-        }
-        private static T BuildHandlers<T>(T firstHandler, T? lastHandler, Queue<T> handlers)
-            where T : class, IHandler
-        {
-            var handler = handlers.DequeueOrDefault();
-            if (handler == null)
-                return firstHandler;
 
-            if (lastHandler == null)
-                firstHandler.SetNext(handler);
-            else
-                lastHandler.SetNext(handler);
-
-            lastHandler = handler;
-            return BuildHandlers(firstHandler, lastHandler, handlers);
+            return handlerList[0];
         }
-        private static Queue<IFilterHandler> GetFilters()
+
+        private static IEnumerable<IFilterHandler> GetFilters()
         {
-            return new Queue<IFilterHandler>(
-    [
+            return new List<IFilterHandler>
+            {
                 new GeminiFilter(),
                 new OllamaFilter()
-              ]);
+            };
         }
-        private static Queue<IPayloadHandler> GetPayloads()
+
+        private static IEnumerable<IPayloadHandler> GetPayloads()
         {
-            return new Queue<IPayloadHandler>(
-                [
+            return new List<IPayloadHandler>
+            {
                 new GeminiPayload(),
                 new OllamaPayload()
-                ]);
+            };
         }
-    } 
+    }
 }
